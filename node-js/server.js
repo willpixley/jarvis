@@ -60,11 +60,12 @@ app.get('/callback', async (req, res) => {
 
 // Step 3: Use the access token to make requests to the Spotify API
 app.get('/play', async (req, res) => {
-	const { access_token } = req.query;
-
+	//const { access_token } = req.query;
+	const access_token =
+		'BQBgIcJKqIWCl7Nk8ie9keiNO_lpg4xwXkpSiRz7Ao-a3jY1XPy4d-nLmw2FGab4Sd0ReKFeqS9Nb4hBUonDyzdBcf8b5QDRLPQJbw1iUCBhTMxOyCz6lztIUBPL2W8Gn9NDPslCKU7bcHeCfmm_GvzDYOtsjJtmkDmsnwKSMOGAqEZGbkmgiqzGhqw46V6-p138ez0-DP9buBYc';
 	try {
 		// Play a specific track
-		const trackUri = 'spotify:track:4uLU6hMCjMI75M1JX6lTtA'; // Example track URI
+		const trackUri = 'spotify:track:5uRTAG2Fs6rQt41HwaIx53'; // Example track URI
 		const response = await axios.put(
 			'https://api.spotify.com/v1/me/player/play',
 			{ uris: [trackUri] },
