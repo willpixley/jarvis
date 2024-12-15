@@ -1,0 +1,14 @@
+{
+  "labels":[
+    "turn_on_lights",
+    "turn_off_lights",
+    "play_music",
+    "pause_music",
+    "adjust_brightness",
+    "set_color",
+    "start_light_show",
+    "stop_light_show"
+  ],
+  "threshold":0.0,
+  "positive_label":null
+}
