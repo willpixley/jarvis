@@ -1,4 +1,6 @@
 import dotenv from 'dotenv';
+import fs from 'fs';
+import { refreshAccessToken } from '../controllers/spotifyController.js';
 dotenv.config();
 
 const getRefreshToken = async () => {
@@ -63,4 +65,35 @@ export async function getProfile(accessToken) {
 	const data = await response.json();
 }
 
-export default app;
+const path = './tokens.json';
+
+export function saveTokensToFile(accessToken, refreshToken, expiresIn) {
+	const tokens = {
+		accessToken: accessToken,
+		refreshToken: refreshToken,
+		expiresIn: expiresIn,
+		timestamp: Date.now(),
+	};
+
+	fs.writeFileSync(path, JSON.stringify(tokens));
+}
+
+export async function getTokensFromFile() {
+	if (fs.existsSync(path)) {
+		const data = fs.readFileSync(path);
+		const tokens = JSON.parse(data);
+		if (isTokenExpired(tokens)) {
+			const newToken = await refreshAccessToken();
+			return newToken;
+		}
+		return tokens;
+	}
+	console.log('No token found');
+	return null;
+}
+
+export function isTokenExpired(tokens) {
+	const currentTime = Date.now();
+	const expirationTime = tokens.timestamp + tokens.expiresIn * 1000; // Convert seconds to milliseconds
+	return currentTime >= expirationTime;
+}

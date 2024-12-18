@@ -1,5 +1,6 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
+import { getTokensFromFile, saveTokensToFile } from '../lib/access.js';
 dotenv.config();
 
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
@@ -41,8 +42,9 @@ export async function callback(req, res) {
 			},
 		});
 
-		const { access_token, refresh_token } = response.data;
-		res.json({ access_token, refresh_token }); // Send access token to client or store for further use
+		const { access_token, refresh_token, expires_in } = response.data;
+		saveTokensToFile(access_token, refresh_token, expires_in);
+		res.status(200).send('Authenticated');
 	} catch (error) {
 		console.error(error);
 		res.status(400).send('Error getting tokens');
@@ -50,20 +52,50 @@ export async function callback(req, res) {
 }
 
 export async function play(req, res) {
-	const { access_token } = req.query;
-
+	const { accessToken } = await getTokensFromFile();
 	try {
 		// Play a specific track
-		const trackUri = 'spotify:track:4uLU6hMCjMI75M1JX6lTtA'; // Example track URI
+		const trackUri = 'spotify:track:7j3zZ2jAjzFD60UjhldhHo'; // Example track URI
 		const response = await axios.put(
 			'https://api.spotify.com/v1/me/player/play',
 			{ uris: [trackUri] },
-			{ headers: { Authorization: `Bearer ${access_token}` } }
+			{ headers: { Authorization: `Bearer ${accessToken}` } }
 		);
 
 		res.json(response.data);
 	} catch (error) {
-		console.error(error);
+		console.error(error.response.data);
 		res.status(400).send('Error playing track');
+	}
+}
+
+export async function refreshAccessToken(refreshToken) {
+	const tokenUrl = 'https://accounts.spotify.com/api/token';
+	const credentials = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString(
+		'base64'
+	);
+
+	const headers = {
+		Authorization: `Basic ${credentials}`,
+		'Content-Type': 'application/x-www-form-urlencoded',
+	};
+
+	const data = new URLSearchParams({
+		grant_type: 'refresh_token',
+		refresh_token: refreshToken,
+	});
+
+	try {
+		const response = await axios.post(tokenUrl, data, { headers });
+		const newAccessToken = response.data.access_token;
+		const newExpiresIn = response.data.expires_in;
+
+		// Save the new access token and expiration time
+		saveTokensToFile(newAccessToken, refreshToken, newExpiresIn);
+
+		return { accessToken: newAccessToken };
+	} catch (error) {
+		console.error('Error refreshing token:', error);
+		return null;
 	}
 }
