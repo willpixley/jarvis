@@ -18,7 +18,7 @@ textcat = nlp.add_pipe("textcat")
 
 # Step 3: Add labels (categories/intents)
 intents = [
-    "turn_on_lights", "turn_off_lights", "play_music", "pause_music", 
+    "turn_on_lights", "turn_off_lights",  
     "adjust_brightness", "set_color", "start_light_show", "stop_light_show"
 ]
 for intent in intents:
@@ -27,7 +27,7 @@ for intent in intents:
     
 
 # Step 4: Load training data
-with open("training_data.json", "r") as f:
+with open("light_training_data.json", "r") as f:
     TRAINING_DATA = json.load(f)
 
 # Step 2: Add the NER pipeline component
