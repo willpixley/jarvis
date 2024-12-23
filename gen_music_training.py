@@ -181,7 +181,7 @@ def generate_training_data(num_examples=100):
     return training_data
 
 # Generate and save training data
-training_data = generate_training_data(1000)
+training_data = generate_training_data(10000)
 
 with open("spotify_training_data.json", "w") as f:
     json.dump(training_data, f)

@@ -154,7 +154,7 @@ def generate_training_data(num_examples=100):
     return training_data
 
 # Generate and print a sample of 10 training examples
-training_data = generate_training_data(1000)
+training_data = generate_training_data(10000)
 
 # Save the training data to a JSON file
 with open("light_training_data.json", "w") as f:

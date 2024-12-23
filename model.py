@@ -27,13 +27,9 @@ def init_model(training_data):
             ner.add_label(ent[2])
     return nlp
 
-def train_lights(iterations):
-    iterations.append("Training lights")
-    with open("light_training_data.json", "r") as f:
-        TRAINING_DATA = json.load(f)
-    nlp = init_model( TRAINING_DATA)
-
-
+def train_model(iterations, training_data):
+    iterations.append("Begin training")
+    nlp = init_model(training_data)
     # Ensure training data is formatted for textcat
     def prepare_training_data(data):
         examples = []
@@ -43,7 +39,7 @@ def train_lights(iterations):
             examples.append(example)
         return examples
 
-    training_examples = prepare_training_data(TRAINING_DATA)
+    training_examples = prepare_training_data(training_data)
     # Step 5: Train the model
     optimizer = nlp.begin_training()
 
@@ -57,7 +53,7 @@ def train_lights(iterations):
         iterations.append(f"Iteration {i}, Losses: {losses}")
 
     # Step 6: Save the trained model
-    nlp.to_disk("custom_textcat_model_v1")
+    nlp.to_disk("custom_textcat_model_v4")
 
     # Save loss history to a file
 
@@ -142,11 +138,21 @@ def train_basic_cmds(iterations):
     updated_model_path = "custom_textcat_model_v3"  # Replace with desired path
     nlp.to_disk(updated_model_path)
     print(f"Updated model saved to {updated_model_path}")
-train_lights(iterations)
-train_music(iterations)
-train_basic_cmds(iterations)
 
 
+with open("spotify_training_data.json", "r") as f:
+    music_training_data = json.load(f)
+with open("light_training_data.json", "r") as f:
+    light_training_data = json.load(f)
+with open("basic_cmd_training_data.json", "r") as f:
+    cmd_training_data = json.load(f)
+
+all_training_data = music_training_data + light_training_data + cmd_training_data
+
+try:
+    train_model(iterations=iterations, training_data=all_training_data)
+except Exception as e:
+    iterations.append(f"Error: {e}")
 with open("output.txt", "w") as file:
     for item in iterations:
         file.write(item + "\n")

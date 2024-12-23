@@ -139,7 +139,7 @@ def generate_training_data(num_examples=100):
         training_data.append((example_text, annotations))
     return training_data
 
-training_data = generate_training_data(1000)
+training_data = generate_training_data(10000)
 # Save the training data to a JSON file
 with open("basic_cmd_training_data.json", "w") as f:
     json.dump(training_data, f)
