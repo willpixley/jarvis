@@ -25,11 +25,3 @@ scrollContainer.addEventListener('touchend', () => {
 		behavior: 'smooth',
 	});
 });
-
-document.getElementById('minimize').addEventListener('click', () => {
-	remote.getCurrentWindow().minimize();
-});
-
-document.getElementById('close').addEventListener('click', () => {
-	remote.getCurrentWindow().close();
-});
