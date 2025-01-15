@@ -4,6 +4,7 @@ const createWindow = () => {
 	const win = new BrowserWindow({
 		width: 800,
 		height: 600,
+		frame: false, // Remove the default title bar
 	});
 
 	win.loadFile('index.html');
