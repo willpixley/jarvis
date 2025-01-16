@@ -1,14 +1,14 @@
 import { Router } from '../lib/electron-router-dom'
 
 import { Route } from 'react-router-dom'
-import Clock from './src/components/Clock'
+import Dashboard from './src/screens/Dashboard'
 
 export function Routes() {
   return (
     <Router
       main={
         <>
-          <Route path="/" element={<Clock />} />
+          <Route path="/" element={<Dashboard />} />
         </>
       }
     />

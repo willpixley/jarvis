@@ -5,11 +5,9 @@ import { registerRoute } from '../lib/electron-router-dom'
 
 async function createMainWindow() {
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
-    show: false,
-    autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {})
+    width: 950,
+    height: 700,
+    show: false
   })
 
   registerRoute({
@@ -19,6 +17,7 @@ async function createMainWindow() {
   })
 
   mainWindow.on('ready-to-show', mainWindow.show)
+  mainWindow.webContents.openDevTools()
 }
 
 app.whenReady().then(() => {
