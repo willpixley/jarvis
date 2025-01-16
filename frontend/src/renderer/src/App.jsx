@@ -1,10 +1,10 @@
 import Clock from './components/Clock'
+import { Routes } from '../routes'
 
 function App() {
   return (
     <>
       <Clock />
-      <p>Hello World</p>
     </>
   )
 }
