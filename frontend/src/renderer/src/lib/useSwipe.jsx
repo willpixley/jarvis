@@ -7,11 +7,13 @@ export default (input) => {
   const minSwipeDistance = 50
 
   const onTouchStart = (e) => {
-    setTouchEnd(0) // otherwise the swipe is fired even with usual touch events
-    setTouchStart(e.targetTouches[0].clientX)
+    touchEnd = 0 // otherwise the swipe is fired even with usual touch events
+    touchStart = e.targetTouches[0].clientX
   }
 
-  const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX)
+  const onTouchMove = (e) => {
+    touchEnd = e.targetTouches[0].clientX
+  }
 
   const onTouchEnd = () => {
     if (!touchStart || !touchEnd) return

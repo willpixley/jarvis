@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import Clock from '../components/Clock'
 import useSwipe from '../lib/useSwipe'
 import Weather from '../components/Weather'
