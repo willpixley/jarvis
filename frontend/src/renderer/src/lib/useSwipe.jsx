@@ -1,8 +1,8 @@
 import { useRef } from 'react'
 
 export default (input) => {
-  const touchStart = useRef(null)
-  const touchEnd = useRef(null)
+  let touchStart = useRef(null)
+  let touchEnd = useRef(null)
 
   const minSwipeDistance = 50
 
