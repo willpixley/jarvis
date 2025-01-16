@@ -1,30 +1,32 @@
 import { useRef } from 'react'
 
 export default (input) => {
-  let touchStart = useRef(null)
-  let touchEnd = useRef(null)
+  const touchStart = useRef(null)
+  const touchEnd = useRef(null)
 
   const minSwipeDistance = 50
 
   const onTouchStart = (e) => {
-    touchEnd = 0 // otherwise the swipe is fired even with usual touch events
-    touchStart = e.targetTouches[0].clientX
+    touchEnd.current = null // Reset the end point
+    touchStart.current = e.targetTouches[0].clientX // Store the start point
   }
 
   const onTouchMove = (e) => {
-    touchEnd = e.targetTouches[0].clientX
+    touchEnd.current = e.targetTouches[0].clientX // Update the current point
   }
 
   const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return
-    const distance = touchStart - touchEnd
+    if (touchStart.current === null || touchEnd.current === null) return
+
+    const distance = touchStart.current - touchEnd.current
     const isLeftSwipe = distance > minSwipeDistance
     const isRightSwipe = distance < -minSwipeDistance
+
     if (isLeftSwipe) {
-      input.onSwipedLeft()
+      input.onSwipedLeft?.()
     }
     if (isRightSwipe) {
-      input.onSwipedRight()
+      input.onSwipedRight?.()
     }
   }
 
