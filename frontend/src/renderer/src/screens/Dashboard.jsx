@@ -1,16 +1,22 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import Clock from '../components/Clock'
 import useSwipe from '../lib/useSwipe'
+import Weather from '../components/Weather'
 
 export default function Dashboard() {
+  const [tab, setTab] = useState(0)
+  const tabs = [<Clock />, <Weather />]
   const swipeHandlers = useSwipe({
-    onSwipedLeft: () => console.log('left'),
-    onSwipedRight: () => console.log('right')
+    onSwipedLeft: () => {
+      if (tab < tabs.length - 1) {
+        setTab(tab - 1)
+      }
+    },
+    onSwipedRight: () => {
+      if (tab >= 0) {
+        setTab(tab + 1)
+      }
+    }
   })
-
-  return (
-    <div {...swipeHandlers}>
-      <Clock />
-    </div>
-  )
+  return <div {...swipeHandlers}>{tabs[tab]}</div>
 }
