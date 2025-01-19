@@ -13,8 +13,9 @@ export default function Clock() {
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date()
+      const h = now.getHours() == 12 ? 12 : now.getHours() % 12
       setTime({
-        hour: String(now.getHours()).padStart(2, '0'),
+        hour: String(h).padStart(2, '0'),
         min: String(now.getMinutes()).padStart(2, '0'),
         sec: String(now.getSeconds()).padStart(2, '0')
       })
