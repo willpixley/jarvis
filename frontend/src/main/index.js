@@ -5,8 +5,8 @@ import { registerRoute } from '../lib/electron-router-dom'
 
 async function createMainWindow() {
   const mainWindow = new BrowserWindow({
-    width: 950,
-    height: 700,
+    width: 1200,
+    height: 800,
     show: false
   })
 
