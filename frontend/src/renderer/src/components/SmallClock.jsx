@@ -43,8 +43,8 @@ export default function SmallClock() {
       <p className="font-mono font-bold text-6xl py-7 text-slate-300">
         {time.hour}:{time.min}
       </p>
-      <p className="text-sm font-light text-slate-300">{dateInfo.day}</p>
-      <p className="text-sm font-light text-slate-300">{dateInfo.date}</p>
+      <p className="font-semibold text-slate-400">{dateInfo.day}</p>
+      <p className="font-semibold text-slate-400">{dateInfo.date}</p>
     </div>
   )
 }

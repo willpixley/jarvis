@@ -3,7 +3,9 @@ import { useEffect, useState } from 'react'
 import icons from '../assets/weather_images.json'
 import SmallClock from './SmallClock'
 import { formatTime } from '../lib/utils'
-// https://open-meteo.com/en/docs#latitude=41.653614&longitude=-91.535774&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m&minutely_15=&hourly=&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,precipitation_probability_max,wind_direction_10m_dominant&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=auto&models=
+import sunrise from '../assets/weather/sunrise.svg'
+import sunset from '../assets/weather/sunset.svg'
+// https://open-meteo.com/en/docs#latitude=41.653614&longitude=-91.535774&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m&minutely_15=&hourly=&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=auto&models=
 
 export default function Weather() {
   const [weatherData, setWeatherData] = useState(null)
@@ -51,7 +53,7 @@ export default function Weather() {
     }
     //const url = 'https://api.open-meteo.com/v1/forecast'
     const url =
-      'https://api.open-meteo.com/v1/forecast?latitude=41.653614&longitude=-91.535774&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,precipitation_probability_max,wind_direction_10m_dominant&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=auto'
+      'https://api.open-meteo.com/v1/forecast?latitude=41.653614&longitude=-91.535774&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=auto'
     const fetchWeather = async () => {
       //const responses = await fetchWeatherApi(url)
       const response = await fetch(url)
@@ -61,7 +63,6 @@ export default function Weather() {
         icons[data.current.weather_code][data.current.is_day ? 'day' : 'night']
 
       // Note: The order of weather variables in the URL query and the indices below need to match!
-      console.log(data)
       setWeatherData(data)
       setIsLoading(false)
     }
@@ -71,6 +72,7 @@ export default function Weather() {
   if (isLoading) {
     return <div>Loading...</div>
   }
+  console.log('Weather data: ', weatherData)
 
   return (
     <div className="bg-slate-300 w-full justify-center p-4 grid grid-cols-3 grid-rows-2 gap-6 h-screen bg-gradient-to-br">
@@ -90,15 +92,19 @@ export default function Weather() {
             <p className="text-slate-400 font-medium font-sans">
               Feels like {Math.round(weatherData.current.apparent_temperature)}&deg;F
             </p>
-            <p className="text-slate-400 font-medium">
-              Sunrise: {formatTime(weatherData.daily.sunrise[0])}
-            </p>
-            <p className="text-slate-400 font-medium">
-              Sunset: {formatTime(weatherData.daily.sunset[0])}
-            </p>
+
+            <div className="flex">
+              <img src="../assets/weather/sunrise.svg'" />
+              <p className="text-slate-400 font-semibold">Sunrise</p>
+              <p className="text-slate-400 font-medium">
+                {formatTime(weatherData.daily.sunrise[0])}
+              </p>
+            </div>
+            <p className="text-slate-400 font-semibold">Sunset</p>
+            <p className="text-slate-400 font-medium">{formatTime(weatherData.daily.sunset[0])}</p>
           </div>
 
-          <div className="col-span-1 flex flex-col border-2 border-slate-300 my-5 rounded-md  justify-center items-center w-full">
+          <div className="col-span-1 flex flex-col  border-x-2 border-slate-500 my-5   justify-center items-center w-full">
             <img
               src={weatherData.current.icon.image}
               alt={weatherData.current.icon.description}
@@ -109,12 +115,57 @@ export default function Weather() {
             </p>
           </div>
 
-          <div className="col-span-1 w-full text-slate-300">Hello</div>
+          <div className="col-span-1 w-full text-slate-300 grid grid-cols-2 grid-rows-2 justify-center h-full place-items-center">
+            <div className=" col-span-1 row-span-1 text-center pt-12 pl-10 ">
+              <p className="font-semibold text-3xl">
+                {Math.round(weatherData.daily.temperature_2m_min[0])}&deg;F
+              </p>
+              <p className="font-semibold text-slate-400 text-center text-sm">Low</p>
+            </div>
+            <div className="col-span-1 row-span-1 pt-12 pr-10">
+              <p className="font-semibold text-3xl text-center">
+                {Math.round(weatherData.daily.temperature_2m_max[0])}&deg;F
+              </p>
+              <p className="font-semibold text-slate-400 text-center text-sm">High</p>
+            </div>
+            <div className="col-span-1 row-span-1 pb-12 pl-10">
+              <p className="font-semibold text-3xl text-center">
+                {Math.round(weatherData.daily.wind_speed_10m_max[0])}
+              </p>
+              <p className="font-semibold text-slate-400 text-center text-sm">MPH</p>
+            </div>
+            <div className="col-span-1 row-span-1 pb-12 pr-10">
+              <p className="font-semibold text-center text-3xl">
+                {Math.round(weatherData.daily.uv_index_max[0])}
+              </p>
+              <p className="font-semibold text-slate-400 text-center text-sm">UV</p>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="col-span-2 row-span-1 bg-red-500">Bottom Left</div>
-      {/* Bottom right: 33% width */}
-      <div className="col-span-1 row-span-1 bg-yellow-500">Bottom Right</div>
+      <div className="col-span-2 row-span-1 bg-slate-800 rounded-md px-5">bottom left</div>
+
+      <div className="col-span-1 row-span-1 bg-slate-800 rounded-md px-5">
+        <p className="font-semibold text-xl text-slate-300 text-center pt-3">3 Day Outlook</p>
+        {/* Begin on next day (i+1) */}
+        {Array.from({ length: 3 }, (_, i) => (
+          <div
+            key={i}
+            className=" border-slate-500 w-full h-[22%] my-5 border-t-2 grid grid-cols-3 items-center"
+          >
+            <img
+              className="col-span-1"
+              src={icons[weatherData.daily.weather_code[i + 1]]['day']['image']}
+            />
+            <p className="col-span-1 text-center text-xl font-semibold text-slate-400">
+              {weatherData.daily.temperature_2m_max[i + 1]}&deg;F
+            </p>
+            <p className="col-span-1 text-center text-xl font-semibold text-slate-400">
+              {weatherData.daily.time[i + 1]}
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

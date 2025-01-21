@@ -13,3 +13,7 @@ export function formatTime(dateString) {
   // Return formatted time
   return `${hours}:${minutes} ${ampm}`
 }
+
+export function formatDate(dateString) {
+  const parts = dateString.split('-')
+}
