@@ -82,7 +82,7 @@ export default function Weather() {
               <div className="flex items-center col-span-2">
                 <img
                   className="w-[20%] ml-[12%] mr-[5%]"
-                  src="https://cdn-icons-png.flaticon.com/512/8098/8098355.png"
+                  src="https://cdn-icons-png.freepik.com/512/8098/8098358.png"
                   alt="Sunset Icon"
                 />
                 <div>
