@@ -5,6 +5,7 @@ import SmallClock from './SmallClock'
 import { formatTime, formatDate } from '../lib/utils'
 import sunrise from '../assets/weather/sunrise.svg'
 import sunset from '../assets/weather/sunset.svg'
+import Loading from './Loading'
 // https://open-meteo.com/en/docs#latitude=41.653614&longitude=-91.535774&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m&minutely_15=&hourly=temperature_2m,precipitation_probability,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=auto&models=
 
 export default function Weather() {
@@ -37,11 +38,9 @@ export default function Weather() {
   }, [])
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <Loading />
   }
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
+
   console.log('Weather data: ', weatherData)
 
   return (
