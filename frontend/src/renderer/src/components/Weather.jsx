@@ -107,25 +107,25 @@ export default function Weather() {
           </div>
           {/* Daily stats */}
           <div className="col-span-1 w-full text-inverse grid grid-cols-2 grid-rows-2 justify-center h-full place-items-center">
-            <div className=" col-span-1 row-span-1 text-center pt-12 pl-10 ">
+            <div className=" col-span-1 row-span-1 text-center pt-12 pl-8 ">
               <p className="font-semibold text-3xl">
                 {Math.round(weatherData.daily.temperature_2m_min[0])}&deg;F
               </p>
               <p className="font-semibold text-slate-400 text-center text-sm">Low</p>
             </div>
-            <div className="col-span-1 row-span-1 pt-12 pr-10">
+            <div className="col-span-1 row-span-1 pt-12 pr-8">
               <p className="font-semibold text-3xl text-center">
                 {Math.round(weatherData.daily.temperature_2m_max[0])}&deg;F
               </p>
               <p className="font-semibold text-slate-400 text-center text-sm">High</p>
             </div>
-            <div className="col-span-1 row-span-1 pb-12 pl-10">
+            <div className="col-span-1 row-span-1 pb-12 pl-8">
               <p className="font-semibold text-3xl text-center">
                 {Math.round(weatherData.daily.wind_speed_10m_max[0])}
               </p>
               <p className="font-semibold text-slate-400 text-center text-sm">MPH</p>
             </div>
-            <div className="col-span-1 row-span-1 pb-12 pr-10">
+            <div className="col-span-1 row-span-1 pb-12 pr-8">
               <p className="font-semibold text-center text-3xl">
                 {Math.round(weatherData.daily.uv_index_max[0])}
               </p>
