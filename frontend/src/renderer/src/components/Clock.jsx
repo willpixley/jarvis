@@ -3,27 +3,7 @@ import { useState, useEffect } from 'react'
 const clockCss =
   'bg-gray-200 text-slate-800 font-bold font-mono p-6 rounded-md flex items-center justify-center w-[25vw] h-[25vh] text-9xl'
 
-export default function Clock() {
-  const [time, setTime] = useState({
-    hour: '00',
-    min: '00',
-    sec: '00'
-  })
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date()
-      const h = now.getHours() == 12 ? 12 : now.getHours() % 12
-      setTime({
-        hour: String(h).padStart(2, '0'),
-        min: String(now.getMinutes()).padStart(2, '0'),
-        sec: String(now.getSeconds()).padStart(2, '0')
-      })
-    }, 1000)
-
-    return () => clearInterval(interval)
-  }, [])
-
+export default function Clock({ time }) {
   return (
     <div className="flex justify-center items-center h-screen w-full bg-slate-800">
       <div className="flex gap-4">
