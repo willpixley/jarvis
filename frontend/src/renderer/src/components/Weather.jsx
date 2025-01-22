@@ -11,26 +11,34 @@ export default function Weather() {
   const [weatherData, setWeatherData] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
+  const fetchWeather = async () => {
     const url =
       'https://api.open-meteo.com/v1/forecast?latitude=41.653614&longitude=-91.535774&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=temperature_2m,precipitation_probability,weather_code,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=auto'
-    const fetchWeather = async () => {
-      //const responses = await fetchWeatherApi(url)
-      const response = await fetch(url)
-      const data = await response.json()
-      console.log(data)
-      data['current']['icon'] =
-        icons[data.current.weather_code][data.current.is_day ? 'day' : 'night']
 
-      data.time_index = data.hourly.time.indexOf(data.current.time) + 1
+    const response = await fetch(url)
+    const data = await response.json()
+    console.log(data)
 
-      // Note: The order of weather variables in the URL query and the indices below need to match!
-      setWeatherData(data)
-      setIsLoading(false)
-    }
+    data['current']['icon'] =
+      icons[data.current.weather_code][data.current.is_day ? 'day' : 'night']
 
+    data.time_index = data.hourly.time.indexOf(data.current.time) + 1
+
+    setWeatherData(data)
+    setIsLoading(false)
+  }
+
+  useEffect(() => {
     fetchWeather()
-  }, [setWeatherData])
+    const intervalId = setInterval(() => {
+      fetchWeather()
+    }, 300000)
+    return () => clearInterval(intervalId)
+  }, [])
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
   if (isLoading) {
     return <div>Loading...</div>
   }
