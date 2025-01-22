@@ -46,7 +46,7 @@ export default function Weather() {
         <div className="col-span-1 row-span-1 grid grid-cols-3 h-full">
           <div
             id="temp"
-            className="text-center col-span-1 w-full justify-center items-center flex flex-col h-full "
+            className="text-center col-span-1 w-full flex flex-col justify-center items-center h-full "
           >
             <p className="text-slate-300 text-6xl font-sans pb-2 font-bold">
               {Math.round(weatherData.current.temperature_2m)}&deg;F
@@ -55,15 +55,37 @@ export default function Weather() {
               Feels like {Math.round(weatherData.current.apparent_temperature)}&deg;F
             </p>
 
-            <div className="flex">
-              <img src="../assets/weather/sunrise.svg'" />
-              <p className="text-slate-400 font-semibold">Sunrise</p>
-              <p className="text-slate-400 font-medium">
-                {formatTime(weatherData.daily.sunrise[0])}
-              </p>
+            <div className="grid grid-rows-2 grid-cols-2 gap-4 items-center">
+              {/* Sunrise */}
+              <div className="flex items-center col-span-2">
+                <img
+                  className="w-[20%] ml-[12%] mr-[5%]"
+                  src="https://cdn-icons-png.flaticon.com/512/8098/8098355.png"
+                  alt="Sunrise Icon"
+                />
+                <div>
+                  <p className="text-slate-400 font-semibold">Sunrise</p>
+                  <p className="text-slate-400 font-medium">
+                    {formatTime(weatherData.daily.sunrise[0])}
+                  </p>
+                </div>
+              </div>
+
+              {/* Sunset */}
+              <div className="flex items-center col-span-2">
+                <img
+                  className="w-[20%] ml-[12%] mr-[5%]"
+                  src="https://cdn-icons-png.flaticon.com/512/8098/8098355.png"
+                  alt="Sunset Icon"
+                />
+                <div>
+                  <p className="text-slate-400 font-semibold">Sunset</p>
+                  <p className="text-slate-400 font-medium">
+                    {formatTime(weatherData.daily.sunset[0])}
+                  </p>
+                </div>
+              </div>
             </div>
-            <p className="text-slate-400 font-semibold">Sunset</p>
-            <p className="text-slate-400 font-medium">{formatTime(weatherData.daily.sunset[0])}</p>
           </div>
 
           <div className="col-span-1 flex flex-col  border-x-2 border-slate-500 my-5   justify-center items-center w-full">
@@ -113,7 +135,9 @@ export default function Weather() {
           >
             {/* Top content */}
             <div className="flex flex-col items-center">
-              <p className="font-mono font-bold pt-6 text-center text-slate-300">10:00 PM</p>
+              <p className="font-mono font-bold  pt-6 text-center text-slate-300">
+                {formatTime(weatherData.hourly.time[weatherData.time_index + i])}
+              </p>
               <img
                 className="w-full mx-auto"
                 src={
@@ -122,7 +146,7 @@ export default function Weather() {
                   ]['image']
                 }
               />
-              <p className="text-center text-3xl font-semibold text-slate-300">
+              <p className="text-center text-3xl font-mono font-semibold text-slate-300">
                 {Math.round(weatherData.hourly.temperature_2m[i + weatherData.time_index])}&deg;F
               </p>
             </div>
@@ -133,7 +157,7 @@ export default function Weather() {
                 className="w-[30%] mx-auto"
                 src="https://www.freeiconspng.com/thumbs/weather-icon-png/weather-icon-png-19.png"
               />
-              <p className="text-center font-semibold text-slate-400">
+              <p className="text-center font-mono font-semibold text-slate-400">
                 {weatherData.hourly.precipitation_probability[i + weatherData.time_index]}%
               </p>
             </div>
