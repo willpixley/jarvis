@@ -95,7 +95,7 @@ export default function Weather() {
               </div>
             </div>
           </div>
-
+          {/* When and where */}
           <div className="col-span-1 flex flex-col  border-x-2 border-slate-500 my-5   justify-center items-center w-full">
             <img
               src={weatherData.current.icon.image}
@@ -106,7 +106,7 @@ export default function Weather() {
               {weatherData.current.icon.description}
             </p>
           </div>
-
+          {/* Daily stats */}
           <div className="col-span-1 w-full text-slate-300 grid grid-cols-2 grid-rows-2 justify-center h-full place-items-center">
             <div className=" col-span-1 row-span-1 text-center pt-12 pl-10 ">
               <p className="font-semibold text-3xl">
@@ -135,7 +135,9 @@ export default function Weather() {
           </div>
         </div>
       </div>
-      <div className="col-span-2 row-span-1 bg-slate-800 rounded-md p-5 flex gap-4">
+
+      {/* Hourly */}
+      <div className="col-span-2 row-span-1 bg-slate-800 rounded-lg p-5 flex gap-4">
         {Array.from({ length: 6 }, (_, i) => (
           <div
             key={i}
@@ -172,8 +174,8 @@ export default function Weather() {
           </div>
         ))}
       </div>
-
-      <div className="col-span-1 row-span-1 bg-slate-800 rounded-md px-5">
+      {/* 3 Day outlook */}
+      <div className="col-span-1 row-span-1 bg-slate-800 rounded-lg px-5">
         <p className="font-semibold text-xl text-slate-300 text-center pt-3">3 Day Outlook</p>
         {/* Begin on next day (i+1) */}
         {Array.from({ length: 3 }, (_, i) => (
