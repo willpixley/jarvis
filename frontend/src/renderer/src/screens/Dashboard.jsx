@@ -4,7 +4,7 @@ import useSwipe from '../lib/useSwipe'
 import Weather from '../components/Weather'
 
 export default function Dashboard() {
-  const [tab, setTab] = useState(1)
+  const [tab, setTab] = useState(0)
   const [time, setTime] = useState({
     hour: '00',
     min: '00',
