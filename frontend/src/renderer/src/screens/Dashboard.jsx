@@ -41,6 +41,7 @@ export default function Dashboard() {
 
   return (
     <div
+      className="aspect-[3/2]"
       onTouchStart={swipeHandlers.onTouchStart}
       onTouchMove={swipeHandlers.onTouchMove}
       onTouchEnd={swipeHandlers.onTouchEnd}
