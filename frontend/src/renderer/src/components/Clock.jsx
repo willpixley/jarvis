@@ -5,7 +5,7 @@ const clockCss =
 
 export default function Clock({ time }) {
   return (
-    <div className="flex justify-center items-center h-screen w-full bg-black">
+    <div className="flex justify-center items-center h-screen w-full bg-background">
       <div className="flex gap-4">
         <div className={clockCss}>{time.hour}</div>
         <div className={clockCss}>{time.min}</div>
