@@ -45,18 +45,18 @@ export default function Weather() {
   console.log('Weather data: ', weatherData)
 
   return (
-    <div className="bg-slate-300 w-full justify-center p-4 grid grid-cols-3 grid-rows-2 gap-6 h-screen bg-gradient-to-br">
-      <div className="col-span-1 row-span-1   bg-slate-800 rounded-lg flex flex-col justify-center items-center h-full shadow-lg">
-        <h1 className="text-center text-slate-300 font-sans text-3xl ">Iowa City</h1>
+    <div className="bg-background w-full justify-center p-4 grid grid-cols-3 grid-rows-2 gap-6 h-screen bg-gradient-to-br">
+      <div className="col-span-1 row-span-1   bg-primary rounded-lg flex flex-col justify-center items-center h-full shadow-lg">
+        <h1 className="text-center text-inverse font-sans text-3xl ">Iowa City</h1>
         <SmallClock />
       </div>
-      <div className="col-span-2 row-span-1 bg-slate-800 rounded-lg">
+      <div className="col-span-2 row-span-1 bg-primary rounded-lg">
         <div className="col-span-1 row-span-1 grid grid-cols-3 h-full">
           <div
             id="temp"
             className="text-center col-span-1 w-full flex flex-col justify-center items-center h-full "
           >
-            <p className="text-slate-300 text-6xl font-sans pb-2 font-bold">
+            <p className="text-inverse text-6xl font-sans pb-2 font-bold">
               {Math.round(weatherData.current.temperature_2m)}&deg;F
             </p>
             <p className="text-slate-400 font-medium font-sans">
@@ -102,12 +102,12 @@ export default function Weather() {
               alt={weatherData.current.icon.description}
               className="w-[75%] "
             />
-            <p className="w-full text-center text-2xl font-sans text-slate-300 font-bold">
+            <p className="w-full text-center text-2xl font-sans text-inverse font-bold">
               {weatherData.current.icon.description}
             </p>
           </div>
           {/* Daily stats */}
-          <div className="col-span-1 w-full text-slate-300 grid grid-cols-2 grid-rows-2 justify-center h-full place-items-center">
+          <div className="col-span-1 w-full text-inverse grid grid-cols-2 grid-rows-2 justify-center h-full place-items-center">
             <div className=" col-span-1 row-span-1 text-center pt-12 pl-10 ">
               <p className="font-semibold text-3xl">
                 {Math.round(weatherData.daily.temperature_2m_min[0])}&deg;F
@@ -137,7 +137,7 @@ export default function Weather() {
       </div>
 
       {/* Hourly */}
-      <div className="col-span-2 row-span-1 bg-slate-800 rounded-lg p-5 flex gap-4">
+      <div className="col-span-2 row-span-1 bg-primary rounded-lg p-5 flex gap-4">
         {Array.from({ length: 6 }, (_, i) => (
           <div
             key={i}
@@ -145,7 +145,7 @@ export default function Weather() {
           >
             {/* Top content */}
             <div className="flex flex-col items-center">
-              <p className="font-mono font-bold  pt-6 text-center text-slate-300">
+              <p className="font-mono font-bold  pt-6 text-center text-inverse">
                 {formatTime(weatherData.hourly.time[weatherData.time_index + i])}
               </p>
               <img
@@ -156,7 +156,7 @@ export default function Weather() {
                   ]['image']
                 }
               />
-              <p className="text-center text-3xl font-mono font-semibold text-slate-300">
+              <p className="text-center text-3xl font-mono font-semibold text-inverse">
                 {Math.round(weatherData.hourly.temperature_2m[i + weatherData.time_index])}&deg;F
               </p>
             </div>
@@ -175,8 +175,8 @@ export default function Weather() {
         ))}
       </div>
       {/* 3 Day outlook */}
-      <div className="col-span-1 row-span-1 bg-slate-800 rounded-lg px-5">
-        <p className="font-semibold text-xl text-slate-300 text-center pt-3">3 Day Outlook</p>
+      <div className="col-span-1 row-span-1 bg-primary rounded-lg px-5">
+        <p className="font-semibold text-xl text-inverse text-center pt-3">3 Day Outlook</p>
         {/* Begin on next day (i+1) */}
         {Array.from({ length: 3 }, (_, i) => (
           <div
