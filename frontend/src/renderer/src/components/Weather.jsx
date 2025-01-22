@@ -155,7 +155,7 @@ export default function Weather() {
                   ]['image']
                 }
               />
-              <p className="text-center text-3xl font-mono font-semibold text-inverse">
+              <p className="text-center text-2xl font-mono font-semibold text-inverse pt-4">
                 {Math.round(weatherData.hourly.temperature_2m[i + weatherData.time_index])}&deg;F
               </p>
             </div>
