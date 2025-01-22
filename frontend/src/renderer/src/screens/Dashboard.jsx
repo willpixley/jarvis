@@ -14,7 +14,7 @@ export default function Dashboard() {
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date()
-      const h = now.getHours() == 12 || now.getHours == 0 ? 12 : now.getHours() % 12
+      const h = now.getHours() == 12 || now.getHours() == 0 ? 12 : now.getHours() % 12
       setTime({
         hour: String(h).padStart(2, '0'),
         min: String(now.getMinutes()).padStart(2, '0'),
