@@ -2,58 +2,18 @@ import { fetchWeatherApi } from 'openmeteo'
 import { useEffect, useState } from 'react'
 import icons from '../assets/weather_images.json'
 import SmallClock from './SmallClock'
-import { formatTime } from '../lib/utils'
+import { formatTime, formatDate } from '../lib/utils'
 import sunrise from '../assets/weather/sunrise.svg'
 import sunset from '../assets/weather/sunset.svg'
-// https://open-meteo.com/en/docs#latitude=41.653614&longitude=-91.535774&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m&minutely_15=&hourly=&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=auto&models=
+// https://open-meteo.com/en/docs#latitude=41.653614&longitude=-91.535774&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m&minutely_15=&hourly=temperature_2m,precipitation_probability,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=auto&models=
 
 export default function Weather() {
   const [weatherData, setWeatherData] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-  const range = (start, stop, step) =>
-    Array.from({ length: (stop - start) / step }, (_, i) => start + i * step)
 
   useEffect(() => {
-    const params = {
-      latitude: 41.653614,
-      longitude: -91.535774,
-      current: [
-        'temperature_2m',
-        'relative_humidity_2m',
-        'apparent_temperature',
-        'is_day',
-        'precipitation',
-        'rain',
-        'showers',
-        'snowfall',
-        'weather_code',
-        'cloud_cover',
-        'pressure_msl',
-        'surface_pressure',
-        'wind_speed_10m',
-        'wind_direction_10m',
-        'wind_gusts_10m'
-      ],
-      daily: [
-        'weather_code',
-        'temperature_2m_max',
-        'temperature_2m_min',
-        'apparent_temperature_max',
-        'apparent_temperature_min',
-        'sunrise',
-        'sunset',
-        'uv_index_max',
-        'precipitation_probability_max',
-        'wind_direction_10m_dominant'
-      ],
-      temperature_unit: 'fahrenheit',
-      wind_speed_unit: 'mph',
-      precipitation_unit: 'inch',
-      timezone: 'auto'
-    }
-    //const url = 'https://api.open-meteo.com/v1/forecast'
     const url =
-      'https://api.open-meteo.com/v1/forecast?latitude=41.653614&longitude=-91.535774&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=auto'
+      'https://api.open-meteo.com/v1/forecast?latitude=41.653614&longitude=-91.535774&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=temperature_2m,precipitation_probability,weather_code,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=auto'
     const fetchWeather = async () => {
       //const responses = await fetchWeatherApi(url)
       const response = await fetch(url)
@@ -61,6 +21,8 @@ export default function Weather() {
       console.log(data)
       data['current']['icon'] =
         icons[data.current.weather_code][data.current.is_day ? 'day' : 'night']
+
+      data.time_index = data.hourly.time.indexOf(data.current.time) + 1
 
       // Note: The order of weather variables in the URL query and the indices below need to match!
       setWeatherData(data)
@@ -143,7 +105,41 @@ export default function Weather() {
           </div>
         </div>
       </div>
-      <div className="col-span-2 row-span-1 bg-slate-800 rounded-md px-5">bottom left</div>
+      <div className="col-span-2 row-span-1 bg-slate-800 rounded-md p-5 flex gap-4">
+        {Array.from({ length: 6 }, (_, i) => (
+          <div
+            key={i}
+            className="border-slate-500 w-[15%] h-full rounded-md border-2 flex flex-col justify-between items-center"
+          >
+            {/* Top content */}
+            <div className="flex flex-col items-center">
+              <p className="font-mono font-bold pt-6 text-center text-slate-300">10:00 PM</p>
+              <img
+                className="w-full mx-auto"
+                src={
+                  icons[weatherData.hourly.weather_code[i + weatherData.time_index]][
+                    weatherData.hourly.is_day[i + weatherData.time_index] ? 'day' : 'night'
+                  ]['image']
+                }
+              />
+              <p className="text-center text-3xl font-semibold text-slate-300">
+                {Math.round(weatherData.hourly.temperature_2m[i + weatherData.time_index])}&deg;F
+              </p>
+            </div>
+
+            {/* Bottom content */}
+            <div className="flex flex-col items-center pb-3">
+              <img
+                className="w-[30%] mx-auto"
+                src="https://www.freeiconspng.com/thumbs/weather-icon-png/weather-icon-png-19.png"
+              />
+              <p className="text-center font-semibold text-slate-400">
+                {weatherData.hourly.precipitation_probability[i + weatherData.time_index]}%
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
 
       <div className="col-span-1 row-span-1 bg-slate-800 rounded-md px-5">
         <p className="font-semibold text-xl text-slate-300 text-center pt-3">3 Day Outlook</p>
@@ -158,10 +154,10 @@ export default function Weather() {
               src={icons[weatherData.daily.weather_code[i + 1]]['day']['image']}
             />
             <p className="col-span-1 text-center text-xl font-semibold text-slate-400">
-              {weatherData.daily.temperature_2m_max[i + 1]}&deg;F
+              {Math.round(weatherData.daily.temperature_2m_max[i + 1])}&deg;F
             </p>
-            <p className="col-span-1 text-center text-xl font-semibold text-slate-400">
-              {weatherData.daily.time[i + 1]}
+            <p className="col-span-1 text-center text-lg font-semibold text-slate-400">
+              {formatDate(weatherData.daily.time[i + 1])}
             </p>
           </div>
         ))}

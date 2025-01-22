@@ -15,5 +15,21 @@ export function formatTime(dateString) {
 }
 
 export function formatDate(dateString) {
-  const parts = dateString.split('-')
+  const date = new Date(dateString + 'T12:00:00-06:00')
+
+  const options = { weekday: 'short', month: 'short', day: 'numeric' } // Use 'short' for abbreviations
+  const formattedDate = date.toLocaleDateString('en-US', options)
+
+  // Add the ordinal suffix to the day
+  const day = date.getDate()
+  const ordinal =
+    day % 10 === 1 && day !== 11
+      ? 'st'
+      : day % 10 === 2 && day !== 12
+        ? 'nd'
+        : day % 10 === 3 && day !== 13
+          ? 'rd'
+          : 'th'
+
+  return formattedDate.replace(day.toString(), `${day}`)
 }
