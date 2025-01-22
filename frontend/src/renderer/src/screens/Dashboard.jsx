@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import Clock from '../components/Clock'
+import Clock from './Clock'
 import useSwipe from '../lib/useSwipe'
-import Weather from '../components/Weather'
+import Weather from './Weather'
+import Music from './Music'
 
 export default function Dashboard() {
   const [tab, setTab] = useState(0)
@@ -24,7 +25,7 @@ export default function Dashboard() {
 
     return () => clearInterval(interval)
   }, [])
-  const tabs = [<Clock time={time} />, <Weather />]
+  const tabs = [<Clock time={time} />, <Weather />, <Music />]
 
   const swipeHandlers = useSwipe({
     onSwipedLeft: () => {
