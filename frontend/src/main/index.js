@@ -7,7 +7,8 @@ async function createMainWindow() {
   const mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
-    show: false
+    fullscreen: true, // Ensures full screen
+    frame: false
   })
 
   registerRoute({
