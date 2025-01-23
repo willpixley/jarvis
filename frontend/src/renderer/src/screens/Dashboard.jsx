@@ -3,6 +3,7 @@ import Clock from './Clock'
 import useSwipe from '../lib/useSwipe'
 import Weather from './Weather'
 import Music from './Music'
+import MoonClock from './MoonClock'
 
 export default function Dashboard() {
   const [tab, setTab] = useState(0)

@@ -12,7 +12,7 @@
   "1": {
     "day": {
       "description": "Mainly Sunny",
-      "image": "http://openweathermap.org/img/wn/01d@2x.png"
+      "image": "https://cdn3.iconfinder.com/data/icons/game-ui-flat-1/64/sun_day_light_hot_game-512.png"
     },
     "night": {
       "description": "Mainly Clear",
