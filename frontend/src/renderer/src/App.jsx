@@ -1,0 +1,84 @@
+import { useCallback, useEffect, useState } from 'react'
+import Particles, { initParticlesEngine } from '@tsparticles/react'
+import { loadSlim } from '@tsparticles/slim'
+import Dashboard from './screens/Dashboard'
+
+const options = {
+  key: 'snow',
+  name: 'Snow',
+  particles: {
+    number: {
+      value: 400,
+      density: {
+        enable: true
+      }
+    },
+    color: {
+      value: '#fff'
+    },
+    shape: {
+      type: 'circle'
+    },
+    opacity: {
+      value: 1
+    },
+    size: {
+      value: 10
+    },
+    move: {
+      enable: true,
+      speed: 2,
+      direction: 'bottom',
+      straight: true
+    },
+    wobble: {
+      enable: true,
+      distance: 10,
+      speed: 10
+    },
+    zIndex: {
+      value: {
+        min: 0,
+        max: 100
+      },
+      opacityRate: 10,
+      sizeRate: 10,
+      velocityRate: 10
+    }
+  },
+  background: {
+    color: '#333333'
+  }
+}
+
+const App = () => {
+  const [init, setInit] = useState(false)
+
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine)
+    }).then(() => {
+      setInit(true)
+    })
+  }, [])
+
+  const particlesLoaded = (container) => {
+    console.log(container)
+  }
+
+  return (
+    init && (
+      <>
+        <Particles
+          id="tsparticles"
+          particlesLoaded={particlesLoaded}
+          options={options}
+          className="z=0"
+        />
+        <Dashboard className="z-10" />
+      </>
+    )
+  )
+}
+
+export default App

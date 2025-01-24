@@ -4,7 +4,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        mono: ['Roboto Mono', 'monospace'] // Add Roboto Mono to the 'mono' stack
+        mono: ['Roboto Mono', 'monospace'], // Add Roboto Mono to the 'mono' stack,
+        music: ['Audiowide']
       },
       colors: {
         'teal-dark': '#1F2937',
