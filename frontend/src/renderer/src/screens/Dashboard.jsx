@@ -3,11 +3,9 @@ import Clock from './Clock'
 import useSwipe from '../lib/useSwipe'
 import Weather from './Weather'
 import Music from './Music'
-import ParticleBackground from '../assets/music/ParticlesBackground'
-import Test from './Test'
 
 export default function Dashboard() {
-  const [tab, setTab] = useState(2)
+  const [tab, setTab] = useState(0)
   const [time, setTime] = useState({
     hour: '00',
     min: '00',

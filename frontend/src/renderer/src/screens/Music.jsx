@@ -5,7 +5,7 @@ import Forward from '../assets/music/Forward'
 import Back from '../assets/music/Back'
 import Play from '../assets/music/Play'
 import { formatSeconds } from '../lib/utils'
-import ParticleBackground from '../assets/music/ParticlesBackground'
+
 export default function Music() {
   const [song, setSong] = useState({
     artist: 'Ms. Lauryn Hill',
@@ -38,14 +38,14 @@ export default function Music() {
         {/* Image */}
         <div className="w-[20%] aspect-square">
           {song.image ? (
-            <img src={song.image} className="w-full h-full object-cover" />
+            <img src={song.image} className="w-full h-full object-cover rounded-lg" />
           ) : (
             <AlbumLoading />
           )}
         </div>
         <div className="relative w-[50%] mt-4 mb-1 bg-slate-400 rounded-lg h-[0.5%]">
           <div
-            className="absolute top-0 left-0 h-full bg-blue-500 rounded-lg transition-all duration-100"
+            className="absolute top-0 left-0 h-full bg-emerald-600 rounded-lg transition-all duration-100"
             style={{ width: `${progressPercentage}%` }}
           ></div>
         </div>
