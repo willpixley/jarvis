@@ -20,7 +20,9 @@ function formatDateTime(dateStr) {
 
   return `${time} ${date}`
 }
-
+const openExternalLink = (url) => {
+  window.electron.openExternal(url)
+}
 export default function News() {
   const [articles, setArticles] = useState([])
 
@@ -83,6 +85,11 @@ export default function News() {
                 <a
                   className="text-blue-800 font-semibold text-xs my-1 text-center w-full underline"
                   href={article.url}
+                  target="_blank"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    openExternalLink(article.url)
+                  }}
                 >
                   Read more...
                 </a>
