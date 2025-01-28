@@ -10,13 +10,13 @@ import axios from 'axios'
 
 export default function Music() {
   const [song, setSong] = useState({
-    artists: ['Ms. Lauryn Hill', 'Kendrick Lamar'],
+    artists: [],
     image: '',
     link: '',
     length: '',
-    album: 'The Miseducation of Lauryn Hill',
-    name: 'Ex-Factor',
-    duration: 120,
+    album: '',
+    name: '',
+    duration: 0,
     isPlaying: false
   })
   async function getCurrentlyPlaying() {
