@@ -43,6 +43,7 @@ export default function Dashboard() {
 
   return (
     <div
+      className="z-10"
       onTouchStart={swipeHandlers.onTouchStart}
       onTouchMove={swipeHandlers.onTouchMove}
       onTouchEnd={swipeHandlers.onTouchEnd}

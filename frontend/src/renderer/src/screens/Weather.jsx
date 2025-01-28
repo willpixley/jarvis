@@ -44,7 +44,7 @@ export default function Weather() {
   console.log('Weather data: ', weatherData)
 
   return (
-    <div className="bg-background w-full justify-center p-4 grid grid-cols-3 grid-rows-2 gap-6 h-screen bg-gradient-to-br">
+    <div className="bg-transparent w-full justify-center p-4 grid grid-cols-3 grid-rows-2 gap-6 h-screen bg-gradient-to-br z-10">
       <div className="col-span-1 row-span-1   bg-primary rounded-lg flex flex-col justify-center items-center h-full shadow-lg">
         <h1 className="text-center text-inverse font-sans text-3xl ">Iowa City</h1>
         <SmallClock />
