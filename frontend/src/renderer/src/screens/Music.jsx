@@ -5,7 +5,7 @@ import Forward from '../assets/music/Forward'
 import Back from '../assets/music/Back'
 import Play from '../assets/music/Play'
 import { formatSeconds } from '../lib/utils'
-import { searchTrack, play, pause, backTrack, nextTrack, ApiService } from '../lib/api'
+import { searchTrack, play, pause, backTrack, nextTrack, ApiService } from '../lib/spotify'
 import axios from 'axios'
 
 export default function Music() {

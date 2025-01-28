@@ -3,11 +3,12 @@ import Clock from './Clock'
 import useSwipe from '../lib/useSwipe'
 import Weather from './Weather'
 import Music from './Music'
+import News from './News'
 
 export default function Dashboard() {
-  const [tab, setTab] = useState(1)
+  const [tab, setTab] = useState(3)
 
-  const tabs = [<Clock />, <Weather />, <Music />]
+  const tabs = [<Clock />, <Weather />, <Music />, <News />]
 
   const swipeHandlers = useSwipe({
     onSwipedLeft: () => {
