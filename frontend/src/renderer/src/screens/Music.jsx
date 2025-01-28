@@ -5,18 +5,46 @@ import Forward from '../assets/music/Forward'
 import Back from '../assets/music/Back'
 import Play from '../assets/music/Play'
 import { formatSeconds } from '../lib/utils'
+import { searchTrack, play, pause, backTrack, nextTrack, ApiService } from '../lib/api'
+import axios from 'axios'
 
 export default function Music() {
   const [song, setSong] = useState({
-    artist: 'Ms. Lauryn Hill',
-    image: 'https://upload.wikimedia.org/wikipedia/en/9/99/The_Miseducation_of_Lauryn_Hill.png',
+    artists: ['Ms. Lauryn Hill', 'Kendrick Lamar'],
+    image: '',
     link: '',
     length: '',
     album: 'The Miseducation of Lauryn Hill',
     name: 'Ex-Factor',
-    duration: 120
+    duration: 120,
+    isPlaying: false
   })
+  async function getCurrentlyPlaying() {
+    try {
+      const response = await axios.get(`${ApiService.SPOTIFY_SERVER}/info/playing`)
+      const data = response.data
+      const s = {
+        name: data.item.name,
+        isPlaying: data.is_playing,
+        artists: data.item.artists.map((artist) => artist.name),
+        image: data.item.album.images[1].url,
+        duration: Math.floor(data.item.duration_ms / 1000),
+        startedAt: Math.floor(data.progress_ms / 1000),
+        album: data.item.album.name
+      }
+      setCurrentTime(Math.floor(data.progress_ms / 1000))
+      setSong(s)
+    } catch (e) {
+      console.log('Error getting song info: ', e)
+    }
+  }
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getCurrentlyPlaying()
+    }, 1000)
 
+    return () => clearInterval(interval) // Clean up on unmount
+  }, [setSong])
   const [currentTime, setCurrentTime] = useState(0)
 
   useEffect(() => {
@@ -31,7 +59,6 @@ export default function Music() {
   }, [song.duration])
   const progressPercentage = (currentTime / song.duration) * 100
 
-  const [isPaused, setIsPaused] = useState(true)
   return (
     <div>
       <div className="w-screen h-screen bg-transparent flex flex-col items-center justify-center z-10 relative">
@@ -50,35 +77,49 @@ export default function Music() {
           ></div>
         </div>
         <div className="flex w-[50%] justify-between text-sm text-slate-400">
-          <p>{formatSeconds(currentTime)}</p>
-          <p>{formatSeconds(song.duration)}</p>
+          <p className="bg-[#111]">{formatSeconds(currentTime)}</p>
+          <p className="bg-[#111]">{formatSeconds(song.duration)}</p>
         </div>
 
         {/* Text */}
         <p className="mt-4 text-slate-300 text-2xl font-music">{song.name}</p>
-        <p className=" text-slate-400 text-xl font-music">{song.artist}</p>
+        <p className=" text-slate-400 text-xl font-music">{song.artists.join(', ')}</p>
         <div className="flex justify-between w-[30%] pt-5">
-          <Back color="#CBD5E1" size="30px" className="active:fill-gray-400" />
-          {isPaused ? (
-            <Play
-              className="active:fill-gray-400"
-              color="#CBD5E1"
-              size="30px"
-              onClick={() => {
-                setIsPaused(false)
-              }}
-            />
-          ) : (
+          <Back
+            color="#CBD5E1"
+            size="30px"
+            className="active:fill-gray-400"
+            onClick={() => {
+              backTrack()
+            }}
+          />
+          {song.isPlaying ? (
             <Pause
               color="#CBD5E1"
               size="30px"
               className="active:fill-gray-400"
               onClick={() => {
-                setIsPaused(true)
+                pause()
+              }}
+            />
+          ) : (
+            <Play
+              className="active:fill-gray-400"
+              color="#CBD5E1"
+              size="30px"
+              onClick={() => {
+                play()
               }}
             />
           )}
-          <Forward color="#CBD5E1" size="30px" className="active:fill-gray-400" />
+          <Forward
+            color="#CBD5E1"
+            size="30px"
+            className="active:fill-gray-400"
+            onClick={() => {
+              nextTrack()
+            }}
+          />
         </div>
       </div>
     </div>

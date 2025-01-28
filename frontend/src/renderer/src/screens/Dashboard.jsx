@@ -5,7 +5,7 @@ import Weather from './Weather'
 import Music from './Music'
 
 export default function Dashboard() {
-  const [tab, setTab] = useState(0)
+  const [tab, setTab] = useState(2)
   const [time, setTime] = useState({
     hour: '00',
     min: '00',

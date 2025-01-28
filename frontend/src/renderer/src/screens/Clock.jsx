@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 const clockCss =
-  'bg-gray-200 text-slate-800 font-bold font-mono p-6 rounded-md flex items-center justify-center w-[25vw] h-[25vh] text-9xl mix-blend-difference'
+  'bg-gray-200 text-[#111] font-bold font-mono p-6 rounded-md flex items-center justify-center w-[25vw] h-[25vh] text-9xl bg-clipped-text '
 
 export default function Clock({ time }) {
   return (
