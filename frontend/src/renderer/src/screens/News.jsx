@@ -72,7 +72,7 @@ export default function News() {
             </div>
             <div className="mr-3 w-[60%] border-2 border-slate-400 shadow-md bg-gray-400 my-3 rounded-md overflow-hidden flex flex-col justify-between">
               <div>
-                <p className="font-semibold text-sm ml-1 mt-3">{article.title}</p>
+                <p className="font-semibold text-sm ml-1 mt-3 line-clamp-3">{article.title}</p>
                 <p className="text-sm ml-1 mt-2 mb-1 line-clamp-3 text-ellipsis ">
                   {article.abstract}
                 </p>

@@ -32,13 +32,14 @@ export default function Music() {
         startedAt: Math.floor(data.progress_ms / 1000),
         album: data.item.album.name
       }
-      setCurrentTime(Math.floor(data.progress_ms / 1000))
       setSong(s)
     } catch (e) {
       console.log('Error getting song info: ', e)
     }
   }
   useEffect(() => {
+    getCurrentlyPlaying()
+    setCurrentTime(song.startedAt)
     const interval = setInterval(() => {
       getCurrentlyPlaying()
     }, 1000)
