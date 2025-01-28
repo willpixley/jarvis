@@ -5,28 +5,9 @@ import Weather from './Weather'
 import Music from './Music'
 
 export default function Dashboard() {
-  const [tab, setTab] = useState(0)
-  const [time, setTime] = useState({
-    hour: '00',
-    min: '00',
-    sec: '00'
-  })
+  const [tab, setTab] = useState(1)
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date()
-      const h = now.getHours() == 12 || now.getHours() == 0 ? 12 : now.getHours() % 12
-      setTime({
-        hour: String(h).padStart(2, '0'),
-        min: String(now.getMinutes()).padStart(2, '0'),
-        sec: String(now.getSeconds()).padStart(2, '0')
-      })
-    }, 1000)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  const tabs = [<Clock time={time} />, <Weather />, <Music />]
+  const tabs = [<Clock />, <Weather />, <Music />]
 
   const swipeHandlers = useSwipe({
     onSwipedLeft: () => {
