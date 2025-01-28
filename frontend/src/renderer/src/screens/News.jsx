@@ -42,6 +42,7 @@ export default function News() {
   }
   // every 15
   useEffect(() => {
+    getNews()
     const interval = setInterval(() => {
       getNews()
     }, 900000)
