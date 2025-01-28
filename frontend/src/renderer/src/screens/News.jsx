@@ -40,9 +40,12 @@ export default function News() {
     }))
     setArticles(n)
   }
-
+  // every 15
   useEffect(() => {
-    getNews()
+    const interval = setInterval(() => {
+      getNews()
+    }, 900000)
+    return () => clearInterval(interval)
   }, [])
   return (
     <div className="w-screen h-screen  px-4 py-8 z-10 overflow-clip grid grid-cols-3 grid-rows-3 gap-8">
