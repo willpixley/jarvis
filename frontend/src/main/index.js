@@ -6,9 +6,9 @@ import { registerRoute } from '../lib/electron-router-dom'
 async function createMainWindow() {
   const mainWindow = new BrowserWindow({
     width: 1200,
-    height: 800
-    //fullscreen: true, // Ensures full screen
-    //frame: false
+    height: 800,
+    fullscreen: true, // Ensures full screen
+    frame: false
   })
 
   registerRoute({
