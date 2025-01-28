@@ -1,9 +1,10 @@
 import dotenv from 'dotenv';
 import fs from 'fs';
 import { refreshAccessToken } from '../controllers/spotifyController.js';
+import axios from 'axios';
 dotenv.config();
 
-const getRefreshToken = async () => {
+export const getRefreshToken = async () => {
 	// refresh token that has been previously stored
 	const refreshToken = localStorage.getItem('refresh_token');
 	const url = 'https://accounts.spotify.com/api/token';
@@ -76,6 +77,7 @@ export function saveTokensToFile(accessToken, refreshToken, expiresIn) {
 	};
 
 	fs.writeFileSync(path, JSON.stringify(tokens));
+	console.log('token saved to file: ', path);
 }
 
 export async function getTokensFromFile() {
@@ -97,3 +99,7 @@ export function isTokenExpired(tokens) {
 	const expirationTime = tokens.timestamp + tokens.expiresIn * 1000; // Convert seconds to milliseconds
 	return currentTime >= expirationTime;
 }
+
+const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
+const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
+const REDIRECT_URI = process.env.SPOTIFY_REDIRECT_URI;

@@ -53,19 +53,19 @@ export async function callback(req, res) {
 }
 
 export async function play(req, res) {
-	const { accessToken } = await getTokensFromFile();
-	const { uri } = req.query;
 	try {
-		// Play a specific track
-		axios.put(
+		const { accessToken } = await getTokensFromFile();
+		const response = await axios.put(
 			'https://api.spotify.com/v1/me/player/play',
-			{ uris: [uri] },
-			{ headers: { Authorization: `Bearer ${accessToken}` } }
+			{},
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
 		);
-
-		res.status(200);
 	} catch (error) {
-		console.error(error.response.data);
+		console.error('Error during playback:', error);
 		res.status(400).send('Error playing track');
 	}
 }
@@ -157,6 +157,75 @@ export async function searchPlaylist(req, res) {
 		res.status(200);
 	} catch (error) {
 		console.error(error.response.data);
+		res.status(400).send('Error playing track');
+	}
+}
+
+export async function backTrack(req, res) {
+	try {
+		const { accessToken } = await getTokensFromFile();
+		const response = await axios.post(
+			'https://api.spotify.com/v1/me/player/previous',
+			{},
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+	} catch (error) {
+		console.error('Error during playback:', error);
+		res.status(400).send('Error playing track');
+	}
+}
+export async function nextTrack(req, res) {
+	try {
+		const { accessToken } = await getTokensFromFile();
+		const response = await axios.post(
+			'https://api.spotify.com/v1/me/player/next',
+			{},
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+	} catch (error) {
+		console.error('Error during playback:', error);
+		res.status(400).send('Error playing track');
+	}
+}
+export async function pauseTrack(req, res) {
+	try {
+		const { accessToken } = await getTokensFromFile();
+		const response = await axios.put(
+			'https://api.spotify.com/v1/me/player/pause',
+			{},
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+	} catch (error) {
+		console.error('Error during playback:', error);
+		res.status(400).send('Error playing track');
+	}
+}
+export async function resumeTrack(req, res) {
+	try {
+		const { accessToken } = await getTokensFromFile();
+		const response = await axios.put(
+			'https://api.spotify.com/v1/me/player/play',
+			{},
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+	} catch (error) {
+		console.error('Error during playback:', error);
 		res.status(400).send('Error playing track');
 	}
 }

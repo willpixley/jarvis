@@ -4,7 +4,13 @@ import spotifyRoutes from './routes/spotifyRoutes.js';
 
 const app = express();
 
-const allowedOrigins = ['http://localhost:5000', 'http://localhost:8888'];
+const allowedOrigins = [
+	'http://localhost:5000',
+	'http://localhost:8888',
+	'http://localhost:5173',
+	'https://accounts.spotify.com',
+	'accounts.spotify.com',
+];
 
 app.use(
 	cors({
@@ -12,10 +18,12 @@ app.use(
 			if (!origin || allowedOrigins.includes(origin)) {
 				callback(null, true); // Allow the origin
 			} else {
+				console.log('Rejected by CORS');
 				callback(new Error('Not allowed by CORS')); // Reject the origin
 			}
 		},
 		methods: ['POST', 'GET', 'PATCH'],
+		credentials: true,
 	})
 );
 
