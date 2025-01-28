@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import SmallClock from '../components/SmallClock'
 function formatDateTime(dateStr) {
   const options = {
     timeZone: 'America/Chicago',
@@ -54,12 +55,7 @@ export default function News() {
     <div className="w-screen h-screen  px-4 py-8 z-10 overflow-clip grid grid-cols-3 grid-rows-3 gap-8">
       {articles.slice(0, 9).map((article, index) =>
         index == 4 ? (
-          <p
-            className="border-2 border-slate-300 rounded-lg flex justify-center items-center text-slate-300 text-8xl text-opacity-80 font-bold"
-            key={index}
-          >
-            FUCK
-          </p>
+          <SmallClock key={index} />
         ) : (
           <div
             key={index}
