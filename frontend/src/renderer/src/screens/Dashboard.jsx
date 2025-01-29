@@ -1,11 +1,18 @@
 import { useState, useEffect } from 'react'
 import Clock from './Clock'
-import useSwipe from '../lib/useSwipe'
+import useSwipe from '../hooks/useSwipe'
 import Weather from './Weather'
 import Music from './Music'
 import News from './News'
 
 export default function Dashboard() {
+  const [dark, setDark] = useState(true)
+
+  const darkModeHandler = () => {
+    setDark(!dark)
+    document.body.classList.toggle('dark')
+  }
+
   const [tab, setTab] = useState(3)
 
   const tabs = [<Clock />, <Weather />, <Music />, <News />]
@@ -20,6 +27,13 @@ export default function Dashboard() {
       if (tab > 0) {
         setTab(tab - 1) // Move to the previous tab
       }
+    },
+    onSwipedUp: () => {
+      console.log('Swiped up')
+    },
+    onSwipedDown: () => {
+      console.log('Swiped down')
+      darkModeHandler()
     }
   })
 

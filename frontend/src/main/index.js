@@ -13,8 +13,8 @@ async function createMainWindow() {
 
       preload: path.join(__dirname, '../preload/index.js')
     },
-    fullscreen: true, // Ensures full screen
-    frame: false
+    fullscreen: true // Ensures full screen
+    //frame: false
   })
 
   registerRoute({

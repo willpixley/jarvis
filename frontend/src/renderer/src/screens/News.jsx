@@ -52,10 +52,12 @@ export default function News() {
     return () => clearInterval(interval)
   }, [])
   return (
-    <div className="w-screen h-screen  px-4 py-8 z-10 overflow-clip grid grid-cols-3 grid-rows-3 gap-8">
+    <div className="w-screen h-screen  px-4 py-8 z-10 overflow-clip grid grid-cols-3 grid-rows-3 gap-8 ">
       {articles.slice(0, 9).map((article, index) =>
         index == 4 ? (
-          <SmallClock key={index} />
+          <div className="col-span-1 row-span-1 flex justify-center items-center">
+            <SmallClock key={index} />
+          </div>
         ) : (
           <div
             key={index}
