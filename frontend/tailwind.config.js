@@ -6,7 +6,7 @@ module.exports = {
     extend: {
       fontFamily: {
         mono: ['Roboto Mono', 'monospace'], // Add Roboto Mono to the 'mono' stack,
-        music: ['Audiowide']
+        music: ['Cal Sans']
       },
       colors: {
         'teal-dark': '#1F2937',

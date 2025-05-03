@@ -86,8 +86,10 @@ export default function Music() {
         </div>
 
         {/* Text */}
-        <p className="mt-4 text-slate-300 text-2xl font-music">{song.name}</p>
-        <p className=" text-slate-400 text-xl font-music">{song.artists.join(', ')}</p>
+        <p className="mt-4 text-slate-300 text-2xl font-music tracking-wider">{song.name}</p>
+        <p className=" text-slate-400 text-xl font-music tracking-wider">
+          {song.artists.join(', ')}
+        </p>
         <div className="flex justify-between w-[30%] pt-5">
           <Back
             color="#CBD5E1"
