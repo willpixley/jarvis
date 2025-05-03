@@ -17,6 +17,5 @@ startServer();
 
 cron.schedule('*/10 * * * * *', async function () {
 	const { refreshToken } = await getTokensFromFile();
-	console.log('Refreshtoken', refreshToken);
 	await refreshAccessToken(refreshToken);
 });

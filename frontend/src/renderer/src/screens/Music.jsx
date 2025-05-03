@@ -12,18 +12,17 @@ export default function Music() {
   const [song, setSong] = useState({
     artists: [],
     image: '',
-    link: '',
-    length: '',
     album: '',
     name: '',
     duration: 0,
-    isPlaying: false
+    isPlaying: false,
+    startedAt: 0
   })
   async function getCurrentlyPlaying() {
     try {
       const response = await axios.get(`${ApiService.SPOTIFY_SERVER}/info/playing`)
       const data = response.data
-      console.log(data)
+
       const s = {
         name: data.item.name,
         isPlaying: data.is_playing,
@@ -40,21 +39,24 @@ export default function Music() {
   }
   useEffect(() => {
     getCurrentlyPlaying()
-    setCurrentTime(song.startedAt)
     const interval = setInterval(() => {
       getCurrentlyPlaying()
     }, 1000)
-
     return () => clearInterval(interval) // Clean up on unmount
-  }, [setSong])
+  }, [])
   const [currentTime, setCurrentTime] = useState(0)
 
   useEffect(() => {
+    setCurrentTime(song.startedAt || 0)
+  }, [song.startedAt])
+  useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentTime((prev) => {
-        const nextTime = prev + 0.1 // Update every 100ms
-        return nextTime < song.duration ? nextTime : song.duration
-      })
+      if (song.isPlaying) {
+        setCurrentTime((prev) => {
+          const nextTime = prev + 0.1 // Update every 100ms
+          return nextTime < song.duration ? nextTime : song.duration
+        })
+      }
     }, 100) // Update every 100ms
 
     return () => clearInterval(interval) // Clean up on unmount
@@ -74,7 +76,7 @@ export default function Music() {
         </div>
         <div className="relative w-[50%] mt-4 mb-1 bg-slate-400 rounded-lg h-[0.5%]">
           <div
-            className="absolute top-0 left-0 h-full bg-emerald-600 rounded-lg transition-all duration-100"
+            className="absolute top-0 left-0 h-full bg-emerald-600 rounded-lg transition-all duration-100 ease-linear"
             style={{ width: `${progressPercentage}%` }}
           ></div>
         </div>
@@ -93,6 +95,7 @@ export default function Music() {
             className="active:fill-gray-400"
             onClick={() => {
               backTrack()
+              setCurrentTime(0)
             }}
           />
           {song.isPlaying ? (
@@ -102,6 +105,7 @@ export default function Music() {
               className="active:fill-gray-400"
               onClick={() => {
                 pause()
+                setSong((prev) => ({ ...prev, isPlaying: false }))
               }}
             />
           ) : (
@@ -111,6 +115,7 @@ export default function Music() {
               size="30px"
               onClick={() => {
                 play()
+                setSong((prev) => ({ ...prev, isPlaying: false }))
               }}
             />
           )}
@@ -120,6 +125,7 @@ export default function Music() {
             className="active:fill-gray-400"
             onClick={() => {
               nextTrack()
+              setCurrentTime(0)
             }}
           />
         </div>

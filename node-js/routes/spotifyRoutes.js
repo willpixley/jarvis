@@ -29,7 +29,7 @@ router.get('/search/playlist', searchPlaylist);
 router.get('/control/back', backTrack);
 router.get('/control/next', nextTrack);
 router.get('/control/pause', pauseTrack);
-router.get('/control/play', play);
+router.get('/control/play', resumeTrack);
 
 router.get('/info/playing', getCurrentlyPlaying);
 

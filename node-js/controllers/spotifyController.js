@@ -143,6 +143,7 @@ export async function backTrack(req, res) {
 				},
 			}
 		);
+		res.status(200).send('Previous Track');
 	} catch (error) {
 		console.error('Error during playback:', error);
 		res.status(400).send('Error playing track');
@@ -160,6 +161,7 @@ export async function nextTrack(req, res) {
 				},
 			}
 		);
+		res.status(200).send('Next Track');
 	} catch (error) {
 		console.error('Error during playback:', error);
 		res.status(400).send('Error playing track');
@@ -168,7 +170,7 @@ export async function nextTrack(req, res) {
 export async function pauseTrack(req, res) {
 	try {
 		const { accessToken } = await getTokensFromFile();
-		const response = await axios.put(
+		axios.put(
 			'https://api.spotify.com/v1/me/player/pause',
 			{},
 			{
@@ -177,6 +179,7 @@ export async function pauseTrack(req, res) {
 				},
 			}
 		);
+		res.status(200).send('Track paused');
 	} catch (error) {
 		console.error('Error during playback:', error);
 		res.status(400).send('Error playing track');
@@ -185,7 +188,7 @@ export async function pauseTrack(req, res) {
 export async function resumeTrack(req, res) {
 	try {
 		const { accessToken } = await getTokensFromFile();
-		const response = await axios.put(
+		axios.put(
 			'https://api.spotify.com/v1/me/player/play',
 			{},
 			{
@@ -194,6 +197,7 @@ export async function resumeTrack(req, res) {
 				},
 			}
 		);
+		res.status(200).send('resume playing');
 	} catch (error) {
 		console.error('Error during playback:', error);
 		res.status(400).send('Error playing track');
