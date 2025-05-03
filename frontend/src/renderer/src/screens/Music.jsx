@@ -27,7 +27,7 @@ export default function Music() {
         name: data.item.name,
         isPlaying: data.is_playing,
         artists: data.item.artists.map((artist) => artist.name),
-        image: data.item.album.images[1].url,
+        image: data.item.album.images[0].url,
         duration: Math.floor(data.item.duration_ms / 1000),
         startedAt: Math.floor(data.progress_ms / 1000),
         album: data.item.album.name
@@ -67,7 +67,7 @@ export default function Music() {
     <div>
       <div className="w-screen h-screen bg-transparent flex flex-col items-center justify-center z-10 relative">
         {/* Image */}
-        <div className="w-[20%] aspect-square">
+        <div className="w-[30%] aspect-square mb-8">
           {song.image ? (
             <img src={song.image} className="w-full h-full object-cover rounded-lg" />
           ) : (
