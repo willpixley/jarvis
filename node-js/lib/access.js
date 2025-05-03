@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 import fs from 'fs';
-import { refreshAccessToken } from '../controllers/spotifyController.js';
 import axios from 'axios';
 dotenv.config();
 
@@ -80,12 +79,44 @@ export function saveTokensToFile(accessToken, refreshToken, expiresIn) {
 	console.log('token saved to file: ', path);
 }
 
+export async function refreshAccessToken(refreshToken) {
+	const tokenUrl = 'https://accounts.spotify.com/api/token';
+	const credentials = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString(
+		'base64'
+	);
+
+	const headers = {
+		Authorization: `Basic ${credentials}`,
+		'Content-Type': 'application/x-www-form-urlencoded',
+	};
+
+	const data = new URLSearchParams({
+		grant_type: 'refresh_token',
+		refresh_token: refreshToken,
+	});
+
+	try {
+		const response = await axios.post(tokenUrl, data, { headers });
+		const newAccessToken = response.data.access_token;
+		const newExpiresIn = response.data.expires_in;
+		const newRefreshToken = response.data.refresh_token;
+		// Save the new access token and expiration time
+		saveTokensToFile(newAccessToken, newRefreshToken, newExpiresIn);
+
+		return { accessToken: newAccessToken, refreshToken: newRefreshToken };
+	} catch (error) {
+		console.error('Error refreshing token:', error);
+		return null;
+	}
+}
+
 export async function getTokensFromFile() {
 	if (fs.existsSync(path)) {
 		const data = fs.readFileSync(path);
 		const tokens = JSON.parse(data);
 		if (isTokenExpired(tokens)) {
-			const newToken = await refreshAccessToken();
+			const newToken = await refreshAccessToken(tokens.refreshToken);
+
 			return newToken;
 		}
 		return tokens;

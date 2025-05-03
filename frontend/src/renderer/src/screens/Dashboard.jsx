@@ -13,7 +13,7 @@ export default function Dashboard() {
     document.body.classList.toggle('dark')
   }
 
-  const [tab, setTab] = useState(3)
+  const [tab, setTab] = useState(2)
 
   const tabs = [<Clock />, <Weather />, <Music />, <News />]
 

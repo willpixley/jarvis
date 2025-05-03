@@ -70,37 +70,6 @@ export async function play(req, res) {
 	}
 }
 
-export async function refreshAccessToken(refreshToken) {
-	const tokenUrl = 'https://accounts.spotify.com/api/token';
-	const credentials = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString(
-		'base64'
-	);
-
-	const headers = {
-		Authorization: `Basic ${credentials}`,
-		'Content-Type': 'application/x-www-form-urlencoded',
-	};
-
-	const data = new URLSearchParams({
-		grant_type: 'refresh_token',
-		refresh_token: refreshToken,
-	});
-
-	try {
-		const response = await axios.post(tokenUrl, data, { headers });
-		const newAccessToken = response.data.access_token;
-		const newExpiresIn = response.data.expires_in;
-
-		// Save the new access token and expiration time
-		saveTokensToFile(newAccessToken, refreshToken, newExpiresIn);
-
-		return { accessToken: newAccessToken };
-	} catch (error) {
-		console.error('Error refreshing token:', error);
-		return null;
-	}
-}
-
 export async function searchTrack(req, res) {
 	const { accessToken } = await getTokensFromFile();
 	//Should already be URL formatted
