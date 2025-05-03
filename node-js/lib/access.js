@@ -99,11 +99,17 @@ export async function refreshAccessToken(refreshToken) {
 		const response = await axios.post(tokenUrl, data, { headers });
 		const newAccessToken = response.data.access_token;
 		const newExpiresIn = response.data.expires_in;
-		const newRefreshToken = response.data.refresh_token;
-		// Save the new access token and expiration time
+		const newRefreshToken = response.data.refresh_token || refreshToken; // fallback
+
+		// Save the token
 		saveTokensToFile(newAccessToken, newRefreshToken, newExpiresIn);
 
-		return { accessToken: newAccessToken, refreshToken: newRefreshToken };
+		return {
+			accessToken: newAccessToken,
+			refreshToken: newRefreshToken,
+			expiresIn: newExpiresIn,
+			timestamp: Date.now(),
+		};
 	} catch (error) {
 		console.error('Error refreshing token:', error);
 		return null;
@@ -111,18 +117,23 @@ export async function refreshAccessToken(refreshToken) {
 }
 
 export async function getTokensFromFile() {
-	if (fs.existsSync(path)) {
-		const data = fs.readFileSync(path);
-		const tokens = JSON.parse(data);
-		if (isTokenExpired(tokens)) {
-			const newToken = await refreshAccessToken(tokens.refreshToken);
-
-			return newToken;
+	try {
+		if (fs.existsSync(path)) {
+			const data = fs.readFileSync(path);
+			const tokens = JSON.parse(data);
+			if (isTokenExpired(tokens)) {
+				console.log('token expired');
+				const newToken = await refreshAccessToken(tokens.refreshToken);
+				fs.writeFileSync(path, JSON.stringify(newToken));
+				return newToken;
+			}
+			return tokens;
 		}
-		return tokens;
+		console.log('No token found');
+		return null;
+	} catch {
+		console.log('Did not work');
 	}
-	console.log('No token found');
-	return null;
 }
 
 export function isTokenExpired(tokens) {

@@ -2,8 +2,7 @@
 import dotenv from 'dotenv';
 import app from './app.js';
 import cron from 'node-cron';
-import { getTokensFromFile } from './lib/access.js';
-//import { refreshAccessToken } from './controllers/spotifyController.js';
+import { getTokensFromFile, refreshAccessToken } from './lib/access.js';
 
 dotenv.config();
 
@@ -18,6 +17,6 @@ startServer();
 
 cron.schedule('*/10 * * * * *', async function () {
 	const { refreshToken } = await getTokensFromFile();
-	console.log('RefereshToken', refreshToken);
-	//await refreshAccessToken(refreshToken);
+	console.log('Refreshtoken', refreshToken);
+	await refreshAccessToken(refreshToken);
 });

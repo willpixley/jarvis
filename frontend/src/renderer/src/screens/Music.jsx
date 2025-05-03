@@ -23,6 +23,7 @@ export default function Music() {
     try {
       const response = await axios.get(`${ApiService.SPOTIFY_SERVER}/info/playing`)
       const data = response.data
+      console.log(data)
       const s = {
         name: data.item.name,
         isPlaying: data.is_playing,

@@ -44,6 +44,7 @@ export async function callback(req, res) {
 		});
 
 		const { access_token, refresh_token, expires_in } = response.data;
+		console.log('Refresh token', refresh_token);
 		saveTokensToFile(access_token, refresh_token, expires_in);
 		res.status(200).send('Authenticated');
 	} catch (error) {
