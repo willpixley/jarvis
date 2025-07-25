@@ -13,9 +13,9 @@ export default function Dashboard() {
     document.body.classList.toggle('dark')
   }
 
-  const [tab, setTab] = useState(2)
+  const [tab, setTab] = useState(4)
 
-  const tabs = [<Clock />, <Weather />, <Music />, <News />]
+  const tabs = [<Clock />, <Weather />, <Music />, <News />, ]
 
   const swipeHandlers = useSwipe({
     onSwipedLeft: () => {
