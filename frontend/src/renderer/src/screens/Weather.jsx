@@ -14,7 +14,7 @@ export default function Weather() {
 
   const fetchWeather = async () => {
     const url =
-      'https://api.open-meteo.com/v1/forecast?latitude=41.653614&longitude=-91.535774&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=temperature_2m,precipitation_probability,weather_code,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=auto'
+      'https://api.open-meteo.com/v1/forecast?latitude=41.653614&longitude=-91.535774&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&hourly=temperature_2m,precipitation_probability,weather_code,is_day,uv_index&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m&timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch'
 
     const response = await fetch(url)
     const data = await response.json()
@@ -126,7 +126,7 @@ export default function Weather() {
             </div>
             <div className="col-span-1 row-span-1 pb-12 pr-8">
               <p className="font-semibold text-center text-3xl">
-                {Math.round(weatherData.daily.uv_index_max[0])}
+                {Math.round(weatherData.hourly.time[weatherData.time_index])}
               </p>
               <p className="font-semibold text-slate-400 text-center text-sm">UV</p>
             </div>

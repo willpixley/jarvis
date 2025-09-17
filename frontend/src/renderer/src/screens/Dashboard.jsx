@@ -4,6 +4,7 @@ import useSwipe from '../hooks/useSwipe'
 import Weather from './Weather'
 import Music from './Music'
 import News from './News'
+import PlantMonitor from './PlantMonitor'
 
 export default function Dashboard() {
   const [dark, setDark] = useState(true)
@@ -13,9 +14,9 @@ export default function Dashboard() {
     document.body.classList.toggle('dark')
   }
 
-  const [tab, setTab] = useState(2)
+  const [tab, setTab] = useState(4)
 
-  const tabs = [<Clock />, <Weather />, <Music />, <News />]
+  const tabs = [<Clock />, <Weather />, <Music />, <News />, <PlantMonitor />]
 
   const swipeHandlers = useSwipe({
     onSwipedLeft: () => {
