@@ -12,10 +12,13 @@ export default function PlantMonitor() {
   })
   useEffect(() => {
     async function getData() {
-      const data = await axios.get('http://192.168.4.146/api')
-      console.log(data)
+      const res = await axios.get('http://192.168.4.146/api')
+      setPlantData(res.data)
     }
     getData()
+    // Get every 15 minutes
+    const intervalId = setInterval(getData, 15 * 60 * 1000)
+    return () => clearInterval(intervalId)
   }, [])
   // Response
   // {
@@ -31,5 +34,9 @@ export default function PlantMonitor() {
   // 		}
   // 	]
   // }
-  return <p></p>
+  return (
+    <div className="z-20">
+      <p className="text-white">Hello</p>
+    </div>
+  )
 }
