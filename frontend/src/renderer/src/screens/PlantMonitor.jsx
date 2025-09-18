@@ -14,6 +14,7 @@ export default function PlantMonitor() {
     async function getData() {
       const res = await axios.get('http://192.168.4.146/api')
       setPlantData(res.data)
+      console.log(res.data)
     }
     getData()
     // Get every 15 minutes
