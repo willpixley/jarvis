@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { getCurrentlyPlaying } from '../controllers/spotifyInfoControllers.js';
+import { getMeasurements } from '../controllers/measurementController.js';
 
 const router = express.Router();
 

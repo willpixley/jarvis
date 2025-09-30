@@ -3,11 +3,13 @@ import dotenv from 'dotenv';
 import app from './app.js';
 import cron from 'node-cron';
 import { getTokensFromFile, refreshAccessToken } from './lib/access.js';
+import { fetchAndStoreMeasurements } from './lib/measure.js';
 
 dotenv.config();
 
 const PORT = process.env.PORT;
 async function startServer() {
+	fetchAndStoreMeasurements();
 	app.listen(PORT, () => {
 		console.log(`Server is running on http://localhost:${PORT}`);
 	});
@@ -21,4 +23,4 @@ cron.schedule('*/10 * * * *', async function () {
 });
 
 // Take a measurement
-cron.schedule('*/10 * * * *', async function () {});
+cron.schedule('*/10 * * * *', fetchAndStoreMeasurements);
