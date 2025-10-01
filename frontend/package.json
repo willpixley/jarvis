@@ -30,8 +30,7 @@
     },
     "linux": {
       "target": [
-        "deb",
-        "AppImage"
+        "deb"
       ],
       "category": "Utility",
       "icon": "assets/icon.png"
