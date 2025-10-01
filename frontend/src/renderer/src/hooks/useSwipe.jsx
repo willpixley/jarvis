@@ -16,7 +16,7 @@ export default (input) => {
   }
 
   const onTouchMove = (e) => {
-    touchEndX.current = e.targetTouches[0].clientX // Update the current point
+    touchEndX.current = e.targetTouches[0].clientX // Update the current poin
     touchEndY.current = e.targetTouches[0].clientY
   }
 

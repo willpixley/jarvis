@@ -1,4 +1,5 @@
 export class ApiService {
+  static BASE_URL = 'http://localhost:8888'
   static SPOTIFY_SERVER = 'http://localhost:8888/api/spotify'
   static JBL_6 = '10:28:74:A2:BE:44'
   static SEARCH_TRACK = `${ApiService.SPOTIFY_SERVER}/search/track`

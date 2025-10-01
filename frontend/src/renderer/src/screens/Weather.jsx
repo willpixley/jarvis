@@ -126,7 +126,7 @@ export default function Weather() {
             </div>
             <div className="col-span-1 row-span-1 pb-12 pr-8">
               <p className="font-semibold text-center text-3xl">
-                {Math.round(weatherData.hourly.time[weatherData.time_index])}
+                {Math.round(weatherData.hourly.uv_index[weatherData.time_index])}
               </p>
               <p className="font-semibold text-slate-400 text-center text-sm">UV</p>
             </div>
