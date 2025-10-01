@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain, shell } from 'electron'
 import path from 'node:path'
 
 import { registerRoute } from '../lib/electron-router-dom'
+app.disableHardwareAcceleration() // 👈 disables GPU to fix gbm_wrapper errors
 
 async function createMainWindow() {
   const mainWindow = new BrowserWindow({
