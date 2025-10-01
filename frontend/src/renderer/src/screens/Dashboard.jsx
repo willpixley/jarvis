@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Clock from './Clock'
 import useSwipe from '../hooks/useSwipe'
 import Weather from './Weather'
@@ -6,7 +6,7 @@ import Music from './Music'
 import News from './News'
 import PlantMonitor from './PlantMonitor'
 
-export default function Dashboard() {
+export default function Dashboard({ setIndex, arrLength }) {
   const [dark, setDark] = useState(true)
 
   const darkModeHandler = () => {
@@ -14,9 +14,9 @@ export default function Dashboard() {
     document.body.classList.toggle('dark')
   }
 
-  const [tab, setTab] = useState(1)
+  const [tab, setTab] = useState(2)
 
-  const tabs = [<Clock />, <Weather />, <Music />, <News />, <PlantMonitor />]
+  const tabs = [<Clock />, <Weather />, <Music />, <PlantMonitor />, <News />]
 
   const swipeHandlers = useSwipe({
     onSwipedLeft: () => {
@@ -30,11 +30,10 @@ export default function Dashboard() {
       }
     },
     onSwipedUp: () => {
-      console.log('Swiped up')
+      setIndex((prevIndex) => (prevIndex - 1 + arrLength) % arrLength)
     },
     onSwipedDown: () => {
-      console.log('Swiped down')
-      darkModeHandler()
+      setIndex((prevIndex) => (prevIndex + 1) % arrLength)
     }
   })
 

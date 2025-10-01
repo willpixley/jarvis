@@ -23,4 +23,4 @@ cron.schedule('*/10 * * * *', async function () {
 });
 
 // Take a measurement
-cron.schedule('*/10 * * * *', fetchAndStoreMeasurements);
+cron.schedule('* * * * *', fetchAndStoreMeasurements);

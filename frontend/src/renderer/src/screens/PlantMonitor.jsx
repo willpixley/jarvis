@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import MeasurementTabs from '../components/MeasurementTabs'
+import PlantTile from '../components/PlantTile'
 
 export default function PlantMonitor() {
   const [plantData, setPlantData] = useState({
@@ -14,6 +15,10 @@ export default function PlantMonitor() {
       { name: 'Moonlight Pilea', soil_moisture: 0 }
     ]
   })
+  const mockPlants = [
+    { name: 'Dracaena Fragrans', soil_moisture: 30 },
+    { name: 'Moonlight Pilea', soil_moisture: 55 }
+  ]
 
   useEffect(() => {
     async function getData() {
@@ -28,8 +33,9 @@ export default function PlantMonitor() {
   return (
     <div className="z-20 flex flex-col justify-evenly w-full h-full">
       <div className="w-full h-[40%] flex flex-col items-center justify-center" id="environment">
-        <div id="current-readings">
+        <div id="current-readings" className="flex justify-evenly w-full">
           <MeasurementTabs environment={plantData.environment} />
+          <PlantTile plants={mockPlants} />
         </div>
       </div>
       <div className="w-full h-[40%]" id="plants"></div>

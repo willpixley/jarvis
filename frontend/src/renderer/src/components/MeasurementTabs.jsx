@@ -27,22 +27,22 @@ export default function MeasurementTabs({ environment }) {
   }, [tabs.length])
 
   return (
-    <div className="w-64 aspect-square bg-primary rounded-2xl overflow-hidden relative">
+    <div className="w-72 aspect-square bg-primary rounded-2xl overflow-hidden relative">
       <div
         className="flex transition-transform duration-500 ease-in-out h-full"
         style={{ transform: `translateX(-${index * 100}%)` }}
       >
         {tabs.map((tab, i) => (
           <div key={i} className="w-full flex-shrink-0 flex flex-col items-center justify-center">
-            <h1 className="font-sans text-inverse font-extrabold text-xl absolute top-8">
+            <h1 className="font-sans text-inverse font-extrabold text-xl absolute top-[10%]">
               {tab.title}
             </h1>
-            <div className="mt-auto mb-auto pt-10">{tab.component}</div>
+            <div className="mt-auto mb-auto pt-[17%]">{tab.component}</div>
           </div>
         ))}
       </div>
 
-      <div className="absolute bottom-5 w-full flex justify-evenly" id="dots">
+      <div className="absolute bottom-[8%] w-full flex justify-evenly" id="dots">
         {tabs.map((_, i) => (
           <div
             key={i}
