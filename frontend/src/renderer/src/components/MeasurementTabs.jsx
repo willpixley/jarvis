@@ -13,8 +13,7 @@ export default function MeasurementTabs({ environment }) {
     {
       component: <HumidityGauge value={Math.round(environment.humidity)} />,
       title: 'Humidity'
-    },
-    { component: <p>Lux</p>, title: 'Light level' }
+    }
   ]
   // switch dial tab
   useEffect(() => {
@@ -34,10 +33,8 @@ export default function MeasurementTabs({ environment }) {
       >
         {tabs.map((tab, i) => (
           <div key={i} className="w-full flex-shrink-0 flex flex-col items-center justify-center">
-            <h1 className="font-sans text-inverse font-extrabold text-xl absolute top-[10%]">
-              {tab.title}
-            </h1>
-            <div className="mt-auto mb-auto pt-[17%]">{tab.component}</div>
+            <h1 className="font-music text-inverse  text-xl absolute top-[10%]">{tab.title}</h1>
+            <div className="pt-7">{tab.component}</div>
           </div>
         ))}
       </div>

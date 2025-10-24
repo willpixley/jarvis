@@ -5,18 +5,12 @@ import Weather from './Weather'
 import Music from './Music'
 import News from './News'
 import PlantMonitor from './PlantMonitor'
+import Football from './Football'
 
-export default function Dashboard({ setIndex, arrLength }) {
-  const [dark, setDark] = useState(true)
+export default function Dashboard({ setIndex }) {
+  const [tab, setTab] = useState(3)
 
-  const darkModeHandler = () => {
-    setDark(!dark)
-    document.body.classList.toggle('dark')
-  }
-
-  const [tab, setTab] = useState(2)
-
-  const tabs = [<Clock />, <Weather />, <Music />, <PlantMonitor />, <News />]
+  const tabs = [<Clock />, <Weather />, <Music />, <Football />, <PlantMonitor />, <News />, <></>]
 
   const swipeHandlers = useSwipe({
     onSwipedLeft: () => {
@@ -30,16 +24,16 @@ export default function Dashboard({ setIndex, arrLength }) {
       }
     },
     onSwipedUp: () => {
-      setIndex((prevIndex) => (prevIndex - 1 + arrLength) % arrLength)
+      setIndex((prevIndex) => (prevIndex - 1 + tabs.length) % tabs.length)
     },
     onSwipedDown: () => {
-      setIndex((prevIndex) => (prevIndex + 1) % arrLength)
+      setIndex((prevIndex) => (prevIndex + 1) % tabs.length)
     }
   })
 
   return (
     <div
-      className="z-10"
+      className="z-10 ease-in-out"
       onTouchStart={swipeHandlers.onTouchStart}
       onTouchMove={swipeHandlers.onTouchMove}
       onTouchEnd={swipeHandlers.onTouchEnd}

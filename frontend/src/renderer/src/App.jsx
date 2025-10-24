@@ -17,9 +17,7 @@ const App = () => {
     })
   }, [])
 
-  const particlesLoaded = (container) => {
-    console.log(container)
-  }
+  const particlesLoaded = (container) => {}
 
   return (
     init && (
@@ -30,7 +28,7 @@ const App = () => {
           options={bgOptions[index]}
           className="z=0"
         />
-        <Dashboard setIndex={setIndex} arrLength={bgOptions.length} className="z-10" />
+        <Dashboard setIndex={setIndex} className="z-10" />
       </>
     )
   )
