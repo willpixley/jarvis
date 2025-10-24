@@ -22,16 +22,18 @@ export default function Football() {
 
   useEffect(() => {
     async function getGames() {
-      try {
-        const res = await axios.get('http://localhost:8888/api/football/games', {
-          params: {
-            dev: true
-          }
-        })
-        setGames(res.data.games)
-        console.log('GAMES', res.data.games)
-      } catch (error) {
-        console.log('ERROR getting games', error)
+      if (isBetweenNoonAnd11PM) {
+        try {
+          const res = await axios.get('http://localhost:8888/api/football/games', {
+            params: {
+              dev: true
+            }
+          })
+          setGames(res.data.games)
+          console.log('GAMES', res.data.games)
+        } catch (error) {
+          console.log('ERROR getting games', error)
+        }
       }
     }
     getGames()
@@ -39,7 +41,14 @@ export default function Football() {
     return () => clearInterval(intervalId)
   }, [])
   if (games.length === 0) {
-    return <p>No games rn</p>
+    return (
+      <div
+        id="background"
+        className="z-20 bg-primary w-[40%] h-[60%] p-10 rounded-2xl flex flex-col text-inverse items-center justify-center"
+      >
+        <p className="text-3xl font-music text-center">No games</p>
+      </div>
+    )
   }
 
   return (
