@@ -4,7 +4,7 @@ Jarvis is a home assistant that's being run locally on a raspberry pi 5 and touc
 
 ## Demo
 
-<video src="https://github.com/willpixley/jarvis/blob/main/demo/demo.MOV" width="320" height="240" controls></video>
+<video src="https://github.com/willpixley/jarvis/blob/main/demo/demo.mp4" width="320" height="240" controls></video>
 
 
 ## Tech Stack
