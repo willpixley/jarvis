@@ -25,9 +25,9 @@ export default function Football() {
       if (isBetweenNoonAnd11PM) {
         try {
           const res = await axios.get('http://localhost:8888/api/football/games', {
-            // params: {
-            //   dev: true
-            // }
+            params: {
+              dev: true
+            }
           })
           setGames(res.data.games)
         } catch (error) {
