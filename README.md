@@ -2,6 +2,11 @@
 
 Jarvis is a home assistant that's being run locally on a raspberry pi 5 and touchscreen. It allows for Spotify control, sensor data collected from my house plants, and information like weather, news, and NFL scores.
 
+## Demo
+
+<video src="https://github.com/willpixley/jarvis/blob/main/demo/demo.MOV" width="320" height="240" controls></video>
+
+
 ## Tech Stack
 
 **Frontend**
