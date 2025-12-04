@@ -26,7 +26,7 @@ export default function Football() {
         try {
           const res = await axios.get('http://localhost:8888/api/football/games', {
             params: {
-              dev: true
+              dev: false
             }
           })
           setGames(res.data.games)
