@@ -30,7 +30,6 @@ export default function Football() {
             }
           })
           setGames(res.data.games)
-          console.log('GAMES', res.data.games)
         } catch (error) {
           console.log('ERROR getting games', error)
         }
