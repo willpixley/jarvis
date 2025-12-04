@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import spotifyRoutes from './routes/spotifyRoutes.js';
 import measurementRoutes from './routes/measurementRoutes.js';
+import footballRoutes from './routes/footballRoutes.js';
 
 //     const users = await knex('users').select('*');
 
@@ -34,5 +35,6 @@ app.use(express.json());
 
 app.use('/api/spotify', spotifyRoutes);
 app.use('/api/measurements', measurementRoutes);
+app.use('/api/football', footballRoutes);
 
 export default app;
