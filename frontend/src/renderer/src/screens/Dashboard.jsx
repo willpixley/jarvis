@@ -7,10 +7,10 @@ import News from './News'
 import PlantMonitor from './PlantMonitor'
 import Football from './Football'
 
-export default function Dashboard({ setIndex }) {
+export default function Dashboard({ setIndex, length }) {
   const [tab, setTab] = useState(3)
 
-  const tabs = [<Clock />, <Weather />, <Music />, <Football />, <PlantMonitor />, <News />, <></>]
+  const tabs = [<Clock />, <Weather />, <Music />, <Football />, <News />, <PlantMonitor />]
 
   const swipeHandlers = useSwipe({
     onSwipedLeft: () => {
@@ -24,10 +24,10 @@ export default function Dashboard({ setIndex }) {
       }
     },
     onSwipedUp: () => {
-      setIndex((prevIndex) => (prevIndex - 1 + tabs.length) % tabs.length)
+      setIndex((prevIndex) => (prevIndex - 1 + length) % length)
     },
     onSwipedDown: () => {
-      setIndex((prevIndex) => (prevIndex + 1) % tabs.length)
+      setIndex((prevIndex) => (prevIndex + 1) % length)
     }
   })
 

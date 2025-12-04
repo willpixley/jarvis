@@ -28,7 +28,7 @@ const App = () => {
           options={bgOptions[index]}
           className="z=0"
         />
-        <Dashboard setIndex={setIndex} className="z-10" />
+        <Dashboard length={bgOptions.length} setIndex={setIndex} className="z-10" />
       </>
     )
   )
