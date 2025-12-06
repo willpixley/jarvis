@@ -43,6 +43,7 @@
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.8.0",
     "axios": "^1.7.9",
+    "dotenv": "^17.2.3",
     "electron-router-dom": "^2.0.0",
     "openmeteo": "^1.1.4",
     "react-flaticons": "^1.1.5"

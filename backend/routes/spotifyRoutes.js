@@ -27,6 +27,7 @@ router.get('/search/artist', searchArtist);
 router.get('/search/playlist', searchPlaylist);
 
 router.get('/control/back', backTrack);
+// GET /api/spotify/control/pause
 router.get('/control/next', nextTrack);
 router.get('/control/pause', pauseTrack);
 router.get('/control/play', resumeTrack);

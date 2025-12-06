@@ -8,7 +8,7 @@ import PlantMonitor from './PlantMonitor'
 import Football from './Football'
 
 export default function Dashboard({ setIndex, length }) {
-  const [tab, setTab] = useState(3)
+  const [tab, setTab] = useState(2)
 
   const tabs = [<Clock />, <Weather />, <Music />, <Football />, <News />, <PlantMonitor />]
 
