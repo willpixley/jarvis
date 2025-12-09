@@ -2,6 +2,7 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 import { getTokensFromFile, saveTokensToFile } from '../lib/access.js';
 import { playGroupedTracks, playTrack } from '../lib/playFunctions.js';
+import { getCurrentVolume } from '../lib/SpotifyFunctions.js';
 dotenv.config();
 
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
@@ -207,8 +208,31 @@ export async function resumeTrack(req, res) {
 export async function setVolume(req, res) {
 	try {
 		const { accessToken } = await getTokensFromFile();
-		const newVolume = 10;
-		axios.put(
+		const { percent, command } = req.body;
+		let newVolume = 0;
+		if (!percent && !command) {
+			return res.status(400).send('Missing percent or command');
+		}
+		if (percent) {
+			newVolume = percent;
+		} else if (command) {
+			const volume = await getCurrentVolume();
+			if (volume < 0) {
+				return res.status(200).send('No active device');
+			}
+			if (command === 'up') {
+				console.log('Turning volume up');
+				newVolume = Math.min(100, volume + 20);
+			}
+			if (command === 'down') {
+				console.log('Turning volume down');
+				newVolume = Math.max(0, volume - 20);
+			}
+			if (command === 'mute') {
+				newVolume = 0;
+			}
+		}
+		await axios.put(
 			`https://api.spotify.com/v1/me/player/volume?volume_percent=${newVolume}`,
 			{},
 			{
@@ -217,7 +241,7 @@ export async function setVolume(req, res) {
 				},
 			}
 		);
-		res.status(200).send('set volume');
+		res.status(200).send(`set volume to ${newVolume}`);
 	} catch (error) {
 		console.error('Error setting volume', error);
 		res.status(400).send('Error setting volume');

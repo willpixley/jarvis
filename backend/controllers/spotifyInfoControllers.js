@@ -15,7 +15,6 @@ export async function getCurrentlyPlaying(req, res) {
 
 		// No need to call response.json(), axios automatically parses JSON
 		const data = response.data;
-		console.log(data);
 		res.status(200).send(data); // Send the current track info as the response
 	} catch (error) {
 		console.error(
@@ -39,7 +38,6 @@ export async function getPlayerInfo(req, res) {
 		);
 
 		const data = response.data;
-		console.log(data);
 		res.status(200).send(data);
 	} catch (error) {
 		console.error(
@@ -63,7 +61,7 @@ export async function getDevices(req, res) {
 		);
 
 		const data = response.data;
-		console.log(data);
+
 		res.status(200).send(data);
 	} catch (error) {
 		console.error(

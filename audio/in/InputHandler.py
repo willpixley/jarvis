@@ -36,7 +36,20 @@ class InputHandler:
                 print("Turning off lights")
 
             case "change_volume":
-                print(f"Changing volume to")
+                url = self.spotifyUrl + "/control/volume"
+                body = {}
+
+                # search tuples for volume entity
+                tup = next((t for t in entities if t[1] == "VOLUME"), None)
+                if tup != None:
+                    amount, _ = tup
+                    if amount.isdigit():
+                        body["percent"] = int(amount)
+                    else:
+                        body["command"] = amount
+                response = requests.post(url, json=body)
+                if response.status_code != 200:
+                    print(response)
 
             case "pause_music":
                 print("Pausing music")
