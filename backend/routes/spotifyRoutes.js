@@ -16,6 +16,7 @@ import {
 import {
 	getCurrentlyPlaying,
 	getPlayerInfo,
+	getDevices,
 } from '../controllers/spotifyInfoControllers.js';
 
 const router = express.Router();
@@ -39,5 +40,6 @@ router.post('/control/volume', setVolume);
 
 router.get('/info/playing', getCurrentlyPlaying);
 router.get('/info/player', getPlayerInfo);
+router.get('/info/devices', getDevices);
 
 export default router;

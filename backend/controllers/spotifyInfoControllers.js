@@ -49,3 +49,27 @@ export async function getPlayerInfo(req, res) {
 		res.status(400).send('Error getting player info');
 	}
 }
+
+export async function getDevices(req, res) {
+	try {
+		const { accessToken } = await getTokensFromFile();
+		const response = await axios.get(
+			'https://api.spotify.com/v1/me/player/devices',
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+
+		const data = response.data;
+		console.log(data);
+		res.status(200).send(data);
+	} catch (error) {
+		console.error(
+			'Error getting devices:',
+			error.response ? error.response.data : error
+		);
+		res.status(400).send('Error getting devices');
+	}
+}
