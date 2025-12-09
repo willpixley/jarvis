@@ -9,3 +9,4 @@ custom_textcat_model_v3/
 custom_textcat_model_v4/
 combined_textcat_ner_model/
 backend/node_modules/
+backend/tokens.json
