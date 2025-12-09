@@ -22,7 +22,8 @@ class STT:
             print(command)
 
     def get_command(self):
-        text = self.transcribe()[:-1]
+        text = self.transcribe()
+        text = text.replace(".", "")
         print("Text: ", text)
         doc = self.classifier(text)
         intent = max(doc.cats, key=doc.cats.get)

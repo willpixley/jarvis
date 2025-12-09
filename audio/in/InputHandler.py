@@ -12,9 +12,10 @@ class InputHandler:
         self.stt = STT(
             audio_path=self.OUTPUT_PATH, classifier_path="voice_command_model"
         )
+        self.spotifyUrl = "http://localhost:8888/api/spotify"
 
     def record_and_process(self):
-        DURATION = 5  # seconds
+        DURATION = 4  # seconds
         SAMPLE_RATE = 44100
         print("recording")
         audio = sd.rec(int(DURATION * SAMPLE_RATE), samplerate=SAMPLE_RATE, channels=1)
@@ -54,10 +55,25 @@ class InputHandler:
                     print(response)
 
             case "skip_song":
-                print("Skipping song")
+                url = self.spotifyUrl + "/control/next"
+                response = requests.get(url)
+                if response.status_code != 200:
+                    print(response)
 
             case "play_artist":
                 print(f"Playing artist")
+                if len(entities) == 0:
+                    print("No artist found")
+                else:
+                    artist, label = entities[0]
+                    if label == "ARTIST":
+                        params = {"search": artist}
+                        url = self.spotifyUrl + "/search/artist"
+                        response = requests.get(url, params)
+                        if response.status_code != 200:
+                            print(response)
+                    else:
+                        print("Detected non-artist entity", entities)
 
             case "get_weather":
                 print("Getting current weather")
@@ -66,4 +82,4 @@ class InputHandler:
                 print("Getting weather forecast")
 
             case _:
-                pass
+                print("Unkown error. Nothing detected", intent, entities)
