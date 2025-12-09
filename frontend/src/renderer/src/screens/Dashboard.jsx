@@ -8,38 +8,43 @@ import PlantMonitor from './PlantMonitor'
 import Football from './Football'
 
 export default function Dashboard({ setIndex, length }) {
-  const [tab, setTab] = useState(2)
+    const [tab, setTab] = useState(2)
 
-  const tabs = [<Clock />, <Weather />, <Music />, <Football />, <News />, <PlantMonitor />]
+    const tabs = [<Clock />, <Weather />, <Music />, <Football />, <News />, <PlantMonitor />]
 
-  const swipeHandlers = useSwipe({
-    onSwipedLeft: () => {
-      if (tab < tabs.length - 1) {
-        setTab(tab + 1) // Move to the next tab
-      }
-    },
-    onSwipedRight: () => {
-      if (tab > 0) {
-        setTab(tab - 1) // Move to the previous tab
-      }
-    },
-    onSwipedUp: () => {
-      setIndex((prevIndex) => (prevIndex - 1 + length) % length)
-    },
-    onSwipedDown: () => {
-      setIndex((prevIndex) => (prevIndex + 1) % length)
-    }
-  })
+    const swipeHandlers = useSwipe({
+        onSwipedLeft: () => {
+            if (tab < tabs.length - 1) {
+                setTab(tab + 1) // Move to the next tab
+            }
+        },
+        onSwipedRight: () => {
+            if (tab > 0) {
+                setTab(tab - 1) // Move to the previous tab
+            }
+        },
+        onSwipedUp: () => {
+            setIndex((prevIndex) => (prevIndex - 1 + length) % length)
+        },
+        onSwipedDown: () => {
+            setIndex((prevIndex) => (prevIndex + 1) % length)
+        }
+    })
 
-  return (
-    <div
-      className="z-10 ease-in-out"
-      onTouchStart={swipeHandlers.onTouchStart}
-      onTouchMove={swipeHandlers.onTouchMove}
-      onTouchEnd={swipeHandlers.onTouchEnd}
-      style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-    >
-      {tabs[tab]}
-    </div>
-  )
+    return (
+        <div
+            className="z-10 ease-in-out"
+            onTouchStart={swipeHandlers.onTouchStart}
+            onTouchMove={swipeHandlers.onTouchMove}
+            onTouchEnd={swipeHandlers.onTouchEnd}
+            style={{
+                height: '100vh',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}
+        >
+            {tabs[tab]}
+        </div>
+    )
 }
