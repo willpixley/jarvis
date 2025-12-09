@@ -2,7 +2,11 @@
 import dotenv from 'dotenv';
 import app from './app.js';
 import cron from 'node-cron';
-import { getTokensFromFile, refreshAccessToken } from './lib/access.js';
+import {
+	getTokensFromFile,
+	refreshAccessToken,
+	sendAuthRequest,
+} from './lib/access.js';
 import { fetchAndStoreMeasurements } from './lib/measure.js';
 
 dotenv.config();
@@ -10,6 +14,7 @@ dotenv.config();
 const PORT = process.env.PORT;
 async function startServer() {
 	//	fetchAndStoreMeasurements();
+	// await sendAuthRequest();
 	app.listen(PORT, () => {
 		console.log(`Server is running on http://localhost:${PORT}`);
 	});

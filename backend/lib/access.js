@@ -4,29 +4,38 @@ import axios from 'axios';
 dotenv.config();
 
 export const sendAuthRequest = async () => {
-	var client_id = process.env.SPOTIFY_CLIENT_ID;
-	var client_secret = process.env.SPOTIFY_CLIENT_SECRET;
+	const client_id = process.env.SPOTIFY_CLIENT_ID;
+	const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 
-	var authOptions = {
-		url: 'https://accounts.spotify.com/api/token',
-		headers: {
-			Authorization:
-				'Basic ' +
-				new Buffer.from(client_id + ':' + client_secret).toString(
-					'base64'
-				),
-		},
-		form: {
-			grant_type: 'client_credentials',
-		},
-		json: true,
-	};
+	try {
+		const authOptions = {
+			url: 'https://accounts.spotify.com/api/token',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				Authorization:
+					'Basic ' +
+					new Buffer.from(client_id + ':' + client_secret).toString(
+						'base64'
+					),
+			},
+			form: {
+				grant_type: 'client_credentials',
+			},
+			json: true,
+		};
 
-	request.post(authOptions, function (error, response, body) {
-		if (!error && response.statusCode === 200) {
-			var token = body.access_token;
-		}
-	});
+		const response = await axios.post(
+			authOptions,
+			function (error, response, body) {
+				if (!error && response.statusCode === 200) {
+					var token = body.access_token;
+				}
+			}
+		);
+		const data = await response.json();
+	} catch (e) {
+		console.log('Error with auth request', e);
+	}
 };
 
 const path = './tokens.json';
