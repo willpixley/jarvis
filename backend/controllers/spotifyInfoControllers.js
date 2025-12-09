@@ -25,3 +25,27 @@ export async function getCurrentlyPlaying(req, res) {
 		res.status(400).send('Error getting track info');
 	}
 }
+
+export async function getPlayerInfo(req, res) {
+	try {
+		const { accessToken } = await getTokensFromFile();
+		const response = await axios.get(
+			'https://api.spotify.com/v1/me/player',
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+
+		const data = response.data;
+		console.log(data);
+		res.status(200).send(data);
+	} catch (error) {
+		console.error(
+			'Error getting player info:',
+			error.response ? error.response.data : error
+		);
+		res.status(400).send('Error getting player info');
+	}
+}

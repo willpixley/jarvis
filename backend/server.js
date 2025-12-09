@@ -9,7 +9,7 @@ dotenv.config();
 
 const PORT = process.env.PORT;
 async function startServer() {
-	fetchAndStoreMeasurements();
+	//	fetchAndStoreMeasurements();
 	app.listen(PORT, () => {
 		console.log(`Server is running on http://localhost:${PORT}`);
 	});

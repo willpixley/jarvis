@@ -10,9 +10,13 @@ import {
 	nextTrack,
 	pauseTrack,
 	resumeTrack,
+	setVolume,
 } from '../controllers/spotifyController.js';
 
-import { getCurrentlyPlaying } from '../controllers/spotifyInfoControllers.js';
+import {
+	getCurrentlyPlaying,
+	getPlayerInfo,
+} from '../controllers/spotifyInfoControllers.js';
 
 const router = express.Router();
 
@@ -31,7 +35,9 @@ router.get('/control/back', backTrack);
 router.get('/control/next', nextTrack);
 router.get('/control/pause', pauseTrack);
 router.get('/control/play', resumeTrack);
+router.post('/control/volume', setVolume);
 
 router.get('/info/playing', getCurrentlyPlaying);
+router.get('/info/player', getPlayerInfo);
 
 export default router;

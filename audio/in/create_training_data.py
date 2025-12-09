@@ -16,12 +16,13 @@ labels = [
 stubs = {
     "play_artist": [
         "Play {artist}.",
-        "I want to listen to {artist}.",
+        "I want to listen to {artist}",
         "Start playing {artist}",
         "Play some {artist}",
         "Can you play {artist}?",
         "Play {artist}",
         "play {artist}",
+        "play some {artist}",
     ],
     "turn_on_lights": [
         "Turn on the lights",
@@ -42,13 +43,26 @@ stubs = {
         "turn it up",
     ],
     "pause_music": ["Pause", "Pause the music", "stop the music", "quiet", "pause"],
-    "play_music": ["play some music", "keep playing", "start the music", "resume"],
+    "play_music": [
+        "play some music",
+        "keep playing",
+        "start the music",
+        "resume",
+        "play",
+        "Play",
+        "play music",
+        "Play music",
+    ],
     "skip_song": [
         "skip this",
         "next song",
         "skip this song",
         "play the next song",
         "skip",
+        "Skip",
+        "Next song",
+        "Skip this song",
+        "Next track",
     ],
     "get_weather": [
         "what's it like out right now?",
@@ -200,6 +214,20 @@ def generate_training_data(num_samples=500):
             end = start + len(amount)
             text = text.replace("{amount}", amount)
             entities.append((start, end, "VOLUME"))
+        elif label == "change_volume":
+            # add up and down and mute to change volume
+            if "up" in text:
+                start = text.index("up")
+                end = start + 2
+                entities.append((start, end, "VOLUME"))
+            elif "down" in text:
+                start = text.index("down")
+                end = start + 4
+                entities.append((start, end, "VOLUME"))
+            elif "mute" in text:
+                start = text.index("mute")
+                end = start + 4
+                entities.append((start, end, "VOLUME"))
 
         # One-hot encode intents
         cats = {l: 1.0 if l == label else 0.0 for l in labels}
@@ -210,7 +238,7 @@ def generate_training_data(num_samples=500):
 
 
 # Generate data
-data = generate_training_data(num_samples=1000)
+data = generate_training_data(num_samples=10000)
 
 # Export to JSON
 with open("training_data.json", "w", encoding="utf-8") as f:

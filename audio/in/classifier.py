@@ -64,4 +64,4 @@ for text in test_texts:
     print(f"Entities: {entities}\n")
 
 
-nlp.to_disk("voice_command_model")
+nlp.to_disk("voice_command_model_v2")

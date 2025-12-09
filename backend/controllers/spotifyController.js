@@ -203,3 +203,23 @@ export async function resumeTrack(req, res) {
 		res.status(400).send('Error playing track');
 	}
 }
+
+export async function setVolume(req, res) {
+	try {
+		const { accessToken } = await getTokensFromFile();
+		const newVolume = 10;
+		axios.put(
+			`https://api.spotify.com/v1/me/player/volume?volume_percent=${newVolume}`,
+			{},
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		res.status(200).send('set volume');
+	} catch (error) {
+		console.error('Error setting volume', error);
+		res.status(400).send('Error setting volume');
+	}
+}

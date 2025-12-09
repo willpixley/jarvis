@@ -10,7 +10,7 @@ class InputHandler:
     def __init__(self):
         self.OUTPUT_PATH = "output.wav"
         self.stt = STT(
-            audio_path=self.OUTPUT_PATH, classifier_path="voice_command_model"
+            audio_path=self.OUTPUT_PATH, classifier_path="voice_command_model_v2"
         )
         self.spotifyUrl = "http://localhost:8888/api/spotify"
 

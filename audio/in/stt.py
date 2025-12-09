@@ -4,7 +4,8 @@ import spacy
 
 class STT:
     def __init__(self, audio_path, classifier_path):
-        self.model = WhisperModel("tiny", compute_type="float32")
+        # tiny
+        self.model = WhisperModel("base", compute_type="float32")
         self.commands = []
         self.audio_path = audio_path
         self.classifier = spacy.load(classifier_path)
@@ -23,7 +24,8 @@ class STT:
 
     def get_command(self):
         text = self.transcribe()
-        text = text.replace(".", "")
+        text = text.replace(".", "")  # cut out periods for sake of NLP
+        text = text.strip()  # same with extra spaces
         print("Text: ", text)
         doc = self.classifier(text)
         intent = max(doc.cats, key=doc.cats.get)
