@@ -30,9 +30,11 @@ class InputHandler:
     def execute_command(self, intent, entities):
         match intent:
             case "turn_on_lights":
+                # need to get new lights that allow this
                 print("Turning on lights")
 
             case "turn_off_lights":
+                # see above
                 print("Turning off lights")
 
             case "change_volume":
@@ -89,10 +91,15 @@ class InputHandler:
                         print("Detected non-artist entity", entities)
 
             case "get_weather":
+                # will maybe implement
                 print("Getting current weather")
 
             case "get_forcast":
+                # will maybe implement
                 print("Getting weather forecast")
+
+            case "none":
+                print("Not confident in any command")
 
             case _:
                 print("Unkown error. Nothing detected", intent, entities)

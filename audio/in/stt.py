@@ -28,6 +28,13 @@ class STT:
         text = text.strip()  # same with extra spaces
         print("Text: ", text)
         doc = self.classifier(text)
-        intent = max(doc.cats, key=doc.cats.get)
+        scores = doc.cats
+        threshold = 0.7
+        label, confidence = max(scores.items(), key=lambda x: x[1])
+        print("Confidence", confidence)
+        if confidence >= threshold:
+            intent = label
+        else:
+            intent = "none"
         entities = [(ent.text, ent.label_) for ent in doc.ents]
         return intent, entities

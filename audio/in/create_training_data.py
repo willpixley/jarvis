@@ -74,11 +74,23 @@ stubs = {
         "what's the temperature",
         "What's the high today?",
     ],
-    "get_forcast": [
+    "get_forecast": [
         "What's it going to be like tomorrow?",
         "What's the weather tomorrow?",
         "Will it rain tomorrow?",
         "What's the high tomorrow?",
+    ],
+    "none": [
+        "I went to the store yesterday",
+        "Can you tell me the time?",
+        "I really like pizza",
+        "I need to buy groceries",
+        "Did you watch the game last night?",
+        "I have a meeting tomorrow",
+        "My cat is sleeping on the couch",
+        "I am reading a book right now",
+        "Let's go for a walk later",
+        "go bears",
     ],
 }
 
