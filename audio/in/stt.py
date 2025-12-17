@@ -5,7 +5,7 @@ import spacy
 class STT:
     def __init__(self, audio_path, classifier_path):
         # tiny
-        self.model = WhisperModel("base", compute_type="float32")
+        self.model = WhisperModel("base", compute_type="int8")
         self.commands = []
         self.audio_path = audio_path
         self.classifier = spacy.load(classifier_path)
