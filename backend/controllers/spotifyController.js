@@ -16,7 +16,7 @@ export async function login(req, res) {
 		response_type: 'code',
 		client_id: CLIENT_ID,
 		scope: scope,
-		redirect_uri: 'http://localhost:8888/api/spotify/callback',
+		redirect_uri: 'http://127.0.0.1:8888/api/spotify/callback',
 	});
 	const authURL = `https://accounts.spotify.com/authorize?${params.toString()}`;
 	res.redirect(authURL);
