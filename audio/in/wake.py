@@ -5,6 +5,7 @@ import queue
 import platform
 from dotenv import load_dotenv
 import os
+from InputHandler import InputHandler
 
 load_dotenv()
 
@@ -12,13 +13,6 @@ load_dotenv()
 
 ACCESS_KEY = os.getenv("PORCUPINE_ACCESS_KEY")
 WAKEWORD_PATH = "./rpi.ppn"  # raspberry pi only
-
-
-def process_audio(audio_frames, sample_rate):
-
-    print("recevied audio")
-    # run through stt and nlp
-    pass
 
 
 porcupine = pvporcupine.create(access_key=ACCESS_KEY, keyword_paths=[WAKEWORD_PATH])
@@ -40,32 +34,9 @@ def wakeword_callback(indata, frames, time, status):
         detected_queue.put(True)  # signal main loop
 
 
-def record_command(duration=3):
-    """Record N seconds of audio after wake word."""
-    print("Recording command...")
-    audio_frames = []
-
-    def command_callback(indata, frames, time, status):
-        audio_frames.append(indata.copy())
-
-    with sd.InputStream(
-        channels=1,
-        samplerate=LISTEN_RATE,
-        dtype="int16",
-        blocksize=FRAME_LENGTH,
-        callback=command_callback,
-    ):
-        sd.sleep(duration * 1000)
-
-    print("Recording finished.")
-    process_audio(audio_frames, LISTEN_RATE)
-
-
-# --------------------------
-#  MAIN LOOP
-# --------------------------
 def main():
     print("Listening for wake word...")
+    ip = InputHandler()
 
     with sd.InputStream(
         channels=1,
@@ -76,8 +47,9 @@ def main():
     ):
         while True:
             if not detected_queue.empty():
+                print("Awakened")
                 detected_queue.get()
-                record_command(duration=3)
+                ip.record_and_process()
 
 
 if __name__ == "__main__":
