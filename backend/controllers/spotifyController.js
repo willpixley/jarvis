@@ -7,7 +7,7 @@ dotenv.config();
 
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
-const REDIRECT_URI = process.env.SPOTIFY_REDIRECT_URI;
+const REDIRECT_URI = 'http://127.0.0.1:8888/api/spotify/callback';
 
 export async function login(req, res) {
 	const scope =
@@ -16,7 +16,7 @@ export async function login(req, res) {
 		response_type: 'code',
 		client_id: CLIENT_ID,
 		scope: scope,
-		redirect_uri: 'http://127.0.0.1:8888/api/spotify/callback',
+		redirect_uri: REDIRECT_URI,
 	});
 	const authURL = `https://accounts.spotify.com/authorize?${params.toString()}`;
 	res.redirect(authURL);
